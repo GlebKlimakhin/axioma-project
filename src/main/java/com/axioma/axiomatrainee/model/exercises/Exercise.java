@@ -43,5 +43,6 @@ public class Exercise {
     @Temporal(TemporalType.TIMESTAMP)
     Date createdAt;
 
+    //todo scopes
     //todo interval for 5, 4, 3, not_done
 }
