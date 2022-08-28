@@ -1,6 +1,39 @@
 version: '3.7'
 
 services:
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    ports:
+      - "8189:8189"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=local"
+    depends_on:
+      - db
+    networks:
+      - app-network
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+
+  db:
+    image: postgres:latest
+    container_name: db
+    hostname: db
+    env_file:
+      - .env
+    networks:
+      - app-network
+    deploy:
+      resources:
+        limits:
+          memory: 256m
+
+
   grafana:
     build: './configuration/grafana'
     ports:
@@ -18,7 +51,7 @@ services:
   prometheus:
     image: prom/prometheus
     ports:
-      - 9000:9000
+      - "9090:9090"
     user: root
     volumes:
       - ./configuration/prometheus.yaml:/etc/prometheus/prometheus.yaml
@@ -29,4 +62,7 @@ services:
             - prometheus
 networks:
   monitoring:
+  app-network:
+    driver: bridge
+    external: false
 
