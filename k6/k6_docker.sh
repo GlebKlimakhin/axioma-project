@@ -1,0 +1,1 @@
+docker run --network host -i loadimpact/k6 run -< k6-stress-script.js

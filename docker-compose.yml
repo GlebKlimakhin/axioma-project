@@ -1,0 +1,69 @@
+version: '3.7'
+
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    environment:
+      - Spring.profiles.active=deploy
+    ports:
+      - "8189:8189"
+    depends_on:
+      - db
+    restart: on-failure
+    networks:
+      - app-network
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+
+  db:
+    image: postgres:latest
+    container_name: db
+    hostname: db
+    env_file:
+      - .env
+    networks:
+      - app-network
+    deploy:
+      resources:
+        limits:
+          memory: 256m
+
+
+  grafana:
+    build: './configuration/grafana'
+    ports:
+      - "3000:3000"
+    user: root
+    volumes:
+      - ./grafana:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=password
+    networks:
+      monitoring:
+        aliases:
+            - grafana
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    user: root
+    volumes:
+      - ./configuration/prometheus.yaml:/etc/prometheus/prometheus.yaml
+      - ./prometheus:/prometheus
+    networks:
+      monitoring:
+        aliases:
+            - prometheus
+networks:
+  monitoring:
+    driver: bridge
+  app-network:
+    driver: bridge
+
