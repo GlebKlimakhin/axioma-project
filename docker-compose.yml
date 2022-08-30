@@ -11,11 +11,9 @@ services:
       - Spring.profiles.active=deploy
     ports:
       - "8189:8189"
-    depends_on:
-      - db
-    restart: on-failure
     networks:
       - app-network
+      - proxy
     deploy:
       resources:
         limits:
@@ -29,11 +27,25 @@ services:
       - .env
     networks:
       - app-network
+    restart: unless-stopped
     deploy:
       resources:
         limits:
           memory: 256m
 
+  proxy:
+    build:
+      context: .
+      dockerfile: docker/proxy/Dockerfile
+    container_name: nginx
+    ports:
+      - "80:80"
+    links:
+      - app
+    depends_on:
+      - app
+    networks:
+      - proxy
 
   grafana:
     build: './configuration/grafana'
@@ -46,9 +58,8 @@ services:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=password
     networks:
-      monitoring:
-        aliases:
-            - grafana
+      - app-network
+
   prometheus:
     image: prom/prometheus
     ports:
@@ -58,11 +69,10 @@ services:
       - ./configuration/prometheus.yaml:/etc/prometheus/prometheus.yaml
       - ./prometheus:/prometheus
     networks:
-      monitoring:
-        aliases:
-            - prometheus
+      - app-network
+
 networks:
-  monitoring:
+  proxy:
     driver: bridge
   app-network:
     driver: bridge
