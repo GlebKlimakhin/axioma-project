@@ -48,7 +48,7 @@ jobs:
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
-          key: -----BEGIN OPENSSH PRIVATE KEY----- b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW QyNTUxOQAAACBku·VdmOeFzVMplTwiDg9uPJOmnX13zDwUx0KLCVXMAAAAJiwJ0OfsCdD nwAAAAtzc2gtZWQyNTUxOQAAACBku+VdnOeFzVMplTw1Dg9uPJOmnX13zDwUx0KLCeVXMA AAAECqMYlpvoeLhsbKirytyoelTZTzzmj4kZx+hFzKF8qeDmS75VZY54XNUymVPDUOD248 k6adfXfMPBTHQosJxVcwAAAAEmtsaW1ha2hpmnlAbWFpbC5ydQECAw== -----END OPENSSH PRIVATE KEY-----
+          key: -----BEGIN OPENSSH PRIVATE KEY b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZWQyNTUxOQAAACBku·VdmOeFzVMplTwiDg9uPJOmnX13zDwUx0KLCVXMAAAAJiwJ0OfsCdDnwAAAAtzc2gtZWQyNTUxOQAAACBku+VdnOeFzVMplTw1Dg9uPJOmnX13zDwUx0KLCeVXMA AAAECqMYlpvoeLhsbKirytyoelTZTzzmj4kZx+hFzKF8qeDmS75VZY54XNUymVPDUOD248k6adfXfMPBTHQosJxVcwAAAAEmtsaW1ha2hpmnlAbWFpbC5ydQECAw== -----END OPENSSH PRIVATE KEY-----
           known_hosts: unnecessary
 
       - name: Adding Known Hosts
