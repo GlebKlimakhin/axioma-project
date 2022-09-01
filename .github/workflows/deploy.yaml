@@ -81,7 +81,7 @@ jobs:
       - name: Deploy with rsync
         run: |
           rsync -avz -e "ssh -v -p 22" target/*.jar root@1006103-cv75389.tmweb.ru:/axioma-project/
-          rsync -avz -e "ssh -v -p 22" ./config/ root@1006103-cv75389.tmweb.ru:/axioma-project/configuration/
+          rsync -avz -e "ssh -v -p 22" ./configuration/ root@1006103-cv75389.tmweb.ru:/axioma-project/configuration/
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh/
