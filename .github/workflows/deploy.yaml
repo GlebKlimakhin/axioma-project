@@ -34,7 +34,7 @@ jobs:
           cache: maven
 
       - name: Maven package and verify
-        run: mvn -B clean verify
+        run: mvn -B clean verify -DskipTests
 
       - name: Check current directory
         run: pwd
