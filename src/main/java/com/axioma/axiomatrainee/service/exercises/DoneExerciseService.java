@@ -2,7 +2,6 @@ package com.axioma.axiomatrainee.service.exercises;
 
 import com.axioma.axiomatrainee.model.dto.DoneExerciseDto;
 import com.axioma.axiomatrainee.model.exercises.DoneExercise;
-import com.axioma.axiomatrainee.model.exercises.DoneExerciseId;
 import com.axioma.axiomatrainee.model.exercises.ExerciseType;
 import com.axioma.axiomatrainee.repository.IDoneExercisesRepository;
 import com.axioma.axiomatrainee.requestdto.SaveDoneExerciseRequestDto;
