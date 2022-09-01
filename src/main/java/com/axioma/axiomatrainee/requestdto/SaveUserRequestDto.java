@@ -2,6 +2,7 @@ package com.axioma.axiomatrainee.requestdto;
 
 import com.axioma.axiomatrainee.model.Group;
 import com.axioma.axiomatrainee.model.user.Role;
+import com.axioma.axiomatrainee.utill.ValidEmail;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,12 +21,13 @@ public class SaveUserRequestDto {
     @NotBlank
     String username;
     @NotBlank
+    String password;
+    @NotBlank
     String firstname;
     @NotBlank
     String lastname;
-    @NotBlank
-    String password;
-    @NotNull
+    @ValidEmail
+    String email;
     Set<Group> groups;
     @NotNull
     Role role;

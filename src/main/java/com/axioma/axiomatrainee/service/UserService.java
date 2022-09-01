@@ -42,6 +42,7 @@ public class UserService {
         user.setGroups(request.getGroups());
         user.setRole(request.getRole());
         user.setStatus(Status.ACTIVE);
+        user.setEmail(request.getEmail());
         return userRepository.save(user);
     }
 

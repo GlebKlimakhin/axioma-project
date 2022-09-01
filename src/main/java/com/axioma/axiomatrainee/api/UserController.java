@@ -45,7 +45,7 @@ public class UserController {
         return userService.save(request);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('admin')")
     public void deleteById(@PathVariable Long id) {
