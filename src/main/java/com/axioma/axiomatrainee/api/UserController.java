@@ -1,6 +1,5 @@
 package com.axioma.axiomatrainee.api;
 
-import com.axioma.axiomatrainee.model.user.Role;
 import com.axioma.axiomatrainee.model.user.User;
 import com.axioma.axiomatrainee.requestdto.SaveUserRequestDto;
 import com.axioma.axiomatrainee.requestdto.UpdateUserRatingRequestDto;
