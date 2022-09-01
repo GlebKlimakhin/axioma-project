@@ -127,4 +127,4 @@ jobs:
           SSH_HOST: 1006103-cv75389.tmweb.ru
 
       - name: Run docker-compose file to up an application and environment
-        run: ssh staging 'cd ~/axioma-project && pwd && ls -l -a -h && docker-compose up --detach --build --force-recreate'
+        run: ssh staging 'cd ../axioma-project && pwd && ls -l -a -h && docker-compose up --detach --build --force-recreate'
