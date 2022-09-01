@@ -48,7 +48,7 @@ jobs:
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
-          key: b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZWQyNTUxOQAAACBku·VdmOeFzVMplTwiDg9uPJOmnX13zDwUx0KLCVXMAAAAJiwJ0OfsCdDnwAAAAtzc2gtZWQyNTUxOQAAACBku+VdnOeFzVMplTw1Dg9uPJOmnX13zDwUx0KLCeVXMA AAAECqMYlpvoeLhsbKirytyoelTZTzzmj4kZx+hFzKF8qeDmS75VZY54XNUymVPDUOD248k6adfXfMPBTHQosJxVcwAAAAEmtsaW1ha2hpmnlAbWFpbC5ydQECAw==
+          key: ssh-ed22519 AAAAC3NzaC1lZDI1NTE5AAAAIGS75V2Y54XNUymVPDUOD248k6adfXfMPBTHQosJxVcw klimakhiny@mail.ru
           known_hosts: unnecessary
 
       - name: Adding Known Hosts
