@@ -42,9 +42,6 @@ jobs:
       - name: Check files in directory
         run: ls -l
         
-      - name: sout key
-        run: echo ${{ secrets.SSH_DEPLOY_KEY}}
-
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
@@ -71,9 +68,9 @@ jobs:
             StrictHostKeyChecking no
           END
         env:
-          SSH_USER: ${{ secrets.SERVER_USERNAME }}
-          SSH_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
-          SSH_HOST: ${{ secrets.SERVER_HOSTNAME }}
+          SSH_USER: 1006103-cv75389.tmweb.ru
+          SSH_KEY: ssh-ed22519 AAAAC3NzaC1lZDI1NTE5AAAAIGS75V2Y54XNUymVPDUOD248k6adfXfMPBTHQosJxVcw klimakhiny@mail.ru
+          SSH_HOST: 22
 
       - name: Run docker-compose file to up an application and environment
         run: ssh staging 'cd ~/axioma-project && pwd && ls -l -a -h && docker-compose up --detach --build --force-recreate'
