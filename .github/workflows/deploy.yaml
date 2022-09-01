@@ -41,6 +41,9 @@ jobs:
 
       - name: Check files in directory
         run: ls -l
+        
+      - name: sout key
+        run: echo ${{ secrets.SSH_DEPLOY_KEY}}
 
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
