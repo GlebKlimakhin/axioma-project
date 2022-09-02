@@ -34,10 +34,10 @@ public class DoneExerciseController {
         return doneExerciseService.findAllByUserId(userId);
     }
 
-    @PostMapping()
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public DoneExercise save(@RequestBody SaveDoneExerciseRequestDto requset) {
-        return doneExerciseService.save(requset);
+    public DoneExercise save(@RequestBody SaveDoneExerciseRequestDto request) {
+        return doneExerciseService.save(request);
     }
 
 }

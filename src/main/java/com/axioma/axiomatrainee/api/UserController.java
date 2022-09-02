@@ -26,7 +26,7 @@ public class UserController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAuthority('teacher')")
+    @PreAuthorize("hasAuthority('user')")
     public List<User> findAll() {
         return userService.findAll();
     }
