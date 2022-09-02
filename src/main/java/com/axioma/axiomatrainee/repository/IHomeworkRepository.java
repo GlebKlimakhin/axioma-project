@@ -11,15 +11,4 @@ public interface IHomeworkRepository extends JpaRepository<Homework, Long> {
 
     List<Homework> findAllByDescriptionContainingIgnoreCase(String description);
 
-    @Query(
-            value = "select h.* from homeworks h " +
-                    "join groups_homeworks gh on " +
-                    "h.id=gh.homework_id "  +
-                    "where h.id in " +
-                    "(select homework_id " +
-                    "from groups_homeworks gh" +
-                    "join groups g on " +
-                    "gh.group_id = g.group_id)",
-            nativeQuery = true)
-    Set<Homework> findHomeworkByGroupId(Long groupId);
 }

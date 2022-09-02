@@ -46,7 +46,7 @@ public class HomeworkController {
     }
 
     @GetMapping("/description={description}")
-    public List<Homework> findAllByDescriptionContaining(String description) {
+    public List<Homework> findAllByDescriptionContaining(@PathVariable String description) {
         return homeworkService.findByDescriptionContaining(description);
     }
 }

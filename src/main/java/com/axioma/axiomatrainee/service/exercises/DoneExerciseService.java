@@ -47,15 +47,6 @@ public class DoneExerciseService {
         return doneExercisesRepository.save(doneExercise);
     }
 
-    private DoneExercise mapToEntity(DoneExerciseDto dto) {
-        return DoneExercise.builder()
-                .doneExerciseId(dto.getDoneExerciseId())
-                .exerciseType(dto.getExerciseType())
-                .score(dto.getScore())
-                .doneAt(DateParser.parseFromUnix(dto.getUnixDate()))
-                .build();
-    }
-
     private DoneExerciseDto mapToDto(DoneExercise exercise) {
         return DoneExerciseDto.builder()
                 .doneExerciseId(exercise.getDoneExerciseId())

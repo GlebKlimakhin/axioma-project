@@ -3,12 +3,14 @@ package com.axioma.axiomatrainee.service;
 import com.axioma.axiomatrainee.model.Homework;
 import com.axioma.axiomatrainee.model.exercises.Exercise;
 import com.axioma.axiomatrainee.repository.IExerciseRepository;
+import com.axioma.axiomatrainee.repository.IGroupRepository;
 import com.axioma.axiomatrainee.repository.IHomeworkRepository;
 import com.axioma.axiomatrainee.requestdto.CreateHomeworkRequestDto;
 import com.axioma.axiomatrainee.utill.DateParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.List;
@@ -22,10 +24,13 @@ public class HomeworkService {
     private IHomeworkRepository homeworkRepository;
     private IExerciseRepository exerciseRepository;
 
+    private IGroupRepository groupRepository;
+
     @Autowired
-    public void setIHomeworkRepository(IHomeworkRepository homeworkRepository, IExerciseRepository exerciseRepository) {
+    public void setIHomeworkRepository(IHomeworkRepository homeworkRepository, IExerciseRepository exerciseRepository, IGroupRepository groupRepository) {
         this.homeworkRepository = homeworkRepository;
         this.exerciseRepository = exerciseRepository;
+        this.groupRepository = groupRepository;
     }
 
     @Transactional
@@ -51,6 +56,8 @@ public class HomeworkService {
     }
 
     public Set<Homework> findAllByGroupId(Long groupId) {
-        return homeworkRepository.findHomeworkByGroupId(groupId);
+        return groupRepository.findById(groupId)
+                .orElseThrow(() -> new EntityNotFoundException("No such group found"))
+                .getHomeworks();
     }
 }
