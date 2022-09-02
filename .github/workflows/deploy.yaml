@@ -23,24 +23,18 @@ jobs:
         ports:
           - 5432:5432
     steps:
-      - name: Check-out repository
+      - name: checkout repo
         uses: actions/checkout@v3
 
-      - name: Setup tools
+      - name: setup java
         uses: actions/setup-java@v3
         with:
           java-version: 17
           distribution: temurin
           cache: maven
 
-      - name: Maven package and verify
+      - name: mvn clean verify
         run: mvn -B clean verify -DskipTests
-
-      - name: Check current directory
-        run: pwd
-
-      - name: Check files in directory
-        run: ls -l
         
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
@@ -48,14 +42,15 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: unnecessary
 
-      - name: Adding Known Hosts
+      - name: add host to known_hosts
         run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SERVER_HOST_NAME }} >> ~/.ssh/known_hosts
 
-      - name: Deploy with rsync
+      - name: rsync transfer
         run: |
           rsync -avz -e "ssh -v -p ${{ secrets.SSH_PORT }}" target/*.jar ${{ secrets.SERVER_HOST_NAME }}:/axioma-project/
           rsync -avz -e "ssh -v -p ${{ secrets.SSH_PORT }}" ./configuration/ ${{ secrets.SERVER_HOST_NAME }}:/axioma-project/configuration/
-      - name: Configure SSH
+          
+      - name: SSH configuration
         run: |
           mkdir -p ~/.ssh/
           echo ${{ secrets.SSH_PRIVATE_KEY }} > ~/.ssh/staging.key
@@ -68,5 +63,5 @@ jobs:
             StrictHostKeyChecking no
           END
 
-      - name: Run docker-compose file to up an application and environment
+      - name: run docker compose
         run: ssh staging 'cd ../axioma-project && pwd && ls -l -a -h && docker-compose up --detach --build --force-recreate'
