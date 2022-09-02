@@ -17,51 +17,108 @@ jobs:
         image:
           postgres:latest
         env:
-          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_DB: $ {{ secrets.POSTGRES_DB }}
+          POSTGRES_HOST: db:5432
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
         ports:
           - 5432:5432
     steps:
-      - name: checkout repo
+      - name: Check-out repository
         uses: actions/checkout@v3
 
-      - name: setup java
+      - name: Setup tools
         uses: actions/setup-java@v3
         with:
           java-version: 17
           distribution: temurin
           cache: maven
 
-      - name: mvn clean verify
+      - name: Maven package and verify
         run: mvn -B clean verify -DskipTests
         
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
-          key: ${{ github.KEY }}
+          key: |
+            -----BEGIN RSA PRIVATE KEY-----
+            MIIEpQIBAAKCAQEAuUhrJqk4rjxNMT4rt4CwObcJytL3Syv5/fv01auW24w+2xTR
+            gjQgHPT6FzHA5Mj/7Sxye/dnU/AF5RjnsycKFc6vdnzKQgb1M491yw21YFDyaTlD
+            WjrTLE0LyS2RLErsVxlGMgwyRk6ISZqBRURAaAUHTZ1b1AaD8wspZ0TLBRFDKeLh
+            5yjdzSGoj0YNMk4AzbWIUBr5I28q4VhUfkrUzGuc68rBl9qKSARwymbG6xMDMkKD
+            bKAFtUs2eVmUkKkky8ltwLJYimnXETo6n8caphLGwSmZhea55q3sancCraYN/oRF
+            2KzrbP65yeWYD2GFvixRPzN2Yg7dgsTVRosLowIDAQABAoIBAQCUzd6QjDOja3ar
+            Z70AgXAGykQpCsnlK4p5OxNlT4u3A6mvlca1hVuNJgp8+k5q8CrqtlmzyfzIYuq5
+            FglvzpjA7t/oj0x5PtFK+Zqm23mhwyEM9RpsqvXSjIY8qkX/hqTNRtUjeLwfzw6R
+            3m6XzLrVT8SPxyNq41ixp3M3Jv7OL7GdPy2L336+twH/x2TR0KggEDiVDpWXV8Ej
+            8Ew7kwfQq5Z3Da2xB9NLF4AKKTQPOas4CGrpZGkG29FEoQKTrBqJHmcNgvzo2pDZ
+            QFH+COyLzxjceCeyndFmUWvEA7mQGr0F+OXgyD8/dKSqs0VzUETzrdpNPN+W7ORB
+            mOoi5egRAoGBAO80JT8xXdtzbVtJegD0bG5lg0GPC+JMpvXV99URIVBYRaEMxM4J
+            vDrNdvVymhek1ocPN+cij0oTj/6QrvwJW0ZJwjiZKNXeReB9nZhoNCbZQXIFP83N
+            MhGqVIo3gzKR2iG2IfOsX0+UsrFM7C6m2spwDsudeDhIN9ht0/t/BsWNAoGBAMZL
+            AjYCZHVUPRZT3bXL+9in6QFcfWWBjWvXW1Jl8C0regs6VcgjPAHRt6esTnV4ndiH
+            1xHAHM2Dujm+xLpWk1ejod16/VgWAgtu8Wm3vWQNbgnh8+lghxzZVo/r2LHO3p+i
+            ytWkegtJArxGp+ngk0xh0cYNUnkKiUCGRVX2U1HvAoGAFKTTchi4mO/lSDOXK+3s
+            TbrFEStfQzCKWD0XHnRUA7Maj0Oi2IVOkWSaF6TEV7YKLa3KjVAWPbZifv3NnELS
+            dcZ31JqjQ5HjRfSRXU3g8lldpJF/aCuFXrDsiuEvmXWs9avaUkVWFHAo29RfrccI
+            qt/w5vG4JmNVLoCMAvB7jSECgYEAhGydamJIoo6CSUHy47D5XOQt2Ini+IH/ZxCo
+            XSvUrOXHGG550TGupmxe4SxSLWNCztNRDvqkgZ9CI8RB70tYFQQjWh0DyerQrMAH
+            mxlo8sOBRDpQwP+E3ABNLcpMqdpElImMOgcgth6pJAFvq+IdnLoK9N/6vvkJVj0V
+            WuYpGKMCgYEAydsYcIQo7fK2XDQpXcqYCCvGe+0lWh0gzbtlnsQdwUSUkNQApmK+
+            8/Gfs4bR2oEKr3d8mnjsJ9I/gHtl64KrpyHMcmB3xzVh7lIyK7743rp2YqKlxcsV
+            WP2vOMxb1J9NuDmV9A277iMi9nM0k47qHi5YEPCs1OG6FUMzZL6OSpg=
+            -----END RSA PRIVATE KEY-----
           known_hosts: unnecessary
 
-      - name: add host to known_hosts
-        run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+      - name: Adding Known Hosts
+        run: ssh-keyscan -p 22 -H 1006103-cv75389.tmweb.ru  >> ~/.ssh/known_hosts
 
-      - name: rsync transfer
+      - name: Deploy with rsync
         run: |
-          rsync -avz -e "ssh -v -p ${{ secrets.SSH_PORT }}" target/*.jar ${{ secrets.SERVER_HOST }}:/axioma-project/
-          rsync -avz -e "ssh -v -p ${{ secrets.SSH_PORT }}" ./configuration/ ${{ secrets.SERVER_HOST }}:/axioma-project/configuration/
-          
-      - name: SSH configuration
+          rsync -avz -e "ssh -v -p 22" target/*.jar root@1006103-cv75389.tmweb.ru:/axioma-project/
+          rsync -avz -e "ssh -v -p 22" ./configuration/ root@1006103-cv75389.tmweb.ru:/axioma-project/configuration/
+      - name: Configure SSH
         run: |
           mkdir -p ~/.ssh/
-          echo ${{ secrets.KEY }} > ~/.ssh/staging.key
+          echo "$SSH_KEY" > ~/.ssh/staging.key
           chmod 600 ~/.ssh/staging.key
           cat >>~/.ssh/config <<END
           Host staging
-            HostName ${{ secrets.SERVER_HOST }}
-            User ${{ secrets.SSH_USER }}
+            HostName $SSH_HOST
+            User $SSH_USER
             IdentityFile ~/.ssh/staging.key
             StrictHostKeyChecking no
           END
+        env:
+          SSH_USER: root
+          SSH_KEY: | 
+            -----BEGIN RSA PRIVATE KEY-----
+            MIIEpQIBAAKCAQEAuUhrJqk4rjxNMT4rt4CwObcJytL3Syv5/fv01auW24w+2xTR
+            gjQgHPT6FzHA5Mj/7Sxye/dnU/AF5RjnsycKFc6vdnzKQgb1M491yw21YFDyaTlD
+            WjrTLE0LyS2RLErsVxlGMgwyRk6ISZqBRURAaAUHTZ1b1AaD8wspZ0TLBRFDKeLh
+            5yjdzSGoj0YNMk4AzbWIUBr5I28q4VhUfkrUzGuc68rBl9qKSARwymbG6xMDMkKD
+            bKAFtUs2eVmUkKkky8ltwLJYimnXETo6n8caphLGwSmZhea55q3sancCraYN/oRF
+            2KzrbP65yeWYD2GFvixRPzN2Yg7dgsTVRosLowIDAQABAoIBAQCUzd6QjDOja3ar
+            Z70AgXAGykQpCsnlK4p5OxNlT4u3A6mvlca1hVuNJgp8+k5q8CrqtlmzyfzIYuq5
+            FglvzpjA7t/oj0x5PtFK+Zqm23mhwyEM9RpsqvXSjIY8qkX/hqTNRtUjeLwfzw6R
+            3m6XzLrVT8SPxyNq41ixp3M3Jv7OL7GdPy2L336+twH/x2TR0KggEDiVDpWXV8Ej
+            8Ew7kwfQq5Z3Da2xB9NLF4AKKTQPOas4CGrpZGkG29FEoQKTrBqJHmcNgvzo2pDZ
+            QFH+COyLzxjceCeyndFmUWvEA7mQGr0F+OXgyD8/dKSqs0VzUETzrdpNPN+W7ORB
+            mOoi5egRAoGBAO80JT8xXdtzbVtJegD0bG5lg0GPC+JMpvXV99URIVBYRaEMxM4J
+            vDrNdvVymhek1ocPN+cij0oTj/6QrvwJW0ZJwjiZKNXeReB9nZhoNCbZQXIFP83N
+            MhGqVIo3gzKR2iG2IfOsX0+UsrFM7C6m2spwDsudeDhIN9ht0/t/BsWNAoGBAMZL
+            AjYCZHVUPRZT3bXL+9in6QFcfWWBjWvXW1Jl8C0regs6VcgjPAHRt6esTnV4ndiH
+            1xHAHM2Dujm+xLpWk1ejod16/VgWAgtu8Wm3vWQNbgnh8+lghxzZVo/r2LHO3p+i
+            ytWkegtJArxGp+ngk0xh0cYNUnkKiUCGRVX2U1HvAoGAFKTTchi4mO/lSDOXK+3s
+            TbrFEStfQzCKWD0XHnRUA7Maj0Oi2IVOkWSaF6TEV7YKLa3KjVAWPbZifv3NnELS
+            dcZ31JqjQ5HjRfSRXU3g8lldpJF/aCuFXrDsiuEvmXWs9avaUkVWFHAo29RfrccI
+            qt/w5vG4JmNVLoCMAvB7jSECgYEAhGydamJIoo6CSUHy47D5XOQt2Ini+IH/ZxCo
+            XSvUrOXHGG550TGupmxe4SxSLWNCztNRDvqkgZ9CI8RB70tYFQQjWh0DyerQrMAH
+            mxlo8sOBRDpQwP+E3ABNLcpMqdpElImMOgcgth6pJAFvq+IdnLoK9N/6vvkJVj0V
+            WuYpGKMCgYEAydsYcIQo7fK2XDQpXcqYCCvGe+0lWh0gzbtlnsQdwUSUkNQApmK+
+            8/Gfs4bR2oEKr3d8mnjsJ9I/gHtl64KrpyHMcmB3xzVh7lIyK7743rp2YqKlxcsV
+            WP2vOMxb1J9NuDmV9A277iMi9nM0k47qHi5YEPCs1OG6FUMzZL6OSpg=
+            -----END RSA PRIVATE KEY-----
+          SSH_HOST: 1006103-cv75389.tmweb.ru
 
-      - name: run docker compose
+      - name: Run docker-compose file to up an application and environment
         run: ssh staging 'cd ../axioma-project && pwd && ls -l -a -h && docker-compose up --detach --build --force-recreate'
