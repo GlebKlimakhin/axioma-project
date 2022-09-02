@@ -1,13 +1,13 @@
 package com.axioma.axiomatrainee.model.user;
 
 import com.axioma.axiomatrainee.model.Group;
+import com.axioma.axiomatrainee.model.files.ImageFile;
 import com.axioma.axiomatrainee.utill.ValidEmail;
 import com.axioma.axiomatrainee.utill.ValidPassword;
 import com.axioma.axiomatrainee.utill.ValidUsername;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -71,4 +71,8 @@ public class User {
     @Column(name = "rating")
     @NotNull
     private Integer rating;
+
+    @OneToOne
+    @JoinColumn(name = "avatar_id")
+    ImageFile avatar;
 }
