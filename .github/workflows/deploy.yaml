@@ -71,7 +71,7 @@ jobs:
           known_hosts: unnecessary
 
       - name: add host to known_hosts
-        run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SERVER_HOST_NAME }} >> ~/.ssh/known_hosts
+        run: ssh-keyscan -p 22 -H ${{ secrets.SERVER_HOST_NAME }} >> ~/.ssh/known_hosts
 
       - name: rsync transfer
         run: |
