@@ -45,25 +45,25 @@ jobs:
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
-          key: ${{ SSH_PRIVATE_KEY }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: unnecessary
 
       - name: Adding Known Hosts
-        run: ssh-keyscan -p ${{ SSH_PORT }} -H ${{ SERVER_HOST_NAME }} >> ~/.ssh/known_hosts
+        run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SERVER_HOST_NAME }} >> ~/.ssh/known_hosts
 
       - name: Deploy with rsync
         run: |
-          rsync -avz -e "ssh -v -p ${{ SSH_PORT }}" target/*.jar ${{ SERVER_HOST_NAME }}:/axioma-project/
-          rsync -avz -e "ssh -v -p ${{ SSH_PORT }}" ./configuration/ ${{ SERVER_HOST_NAME }}:/axioma-project/configuration/
+          rsync -avz -e "ssh -v -p ${{ secrets.SSH_PORT }}" target/*.jar ${{ secrets.SERVER_HOST_NAME }}:/axioma-project/
+          rsync -avz -e "ssh -v -p ${{ secrets.SSH_PORT }}" ./configuration/ ${{ secrets.SERVER_HOST_NAME }}:/axioma-project/configuration/
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh/
-          echo ${{ SSH_PRIVATE_KEY }} > ~/.ssh/staging.key
+          echo ${{ secrets.SSH_PRIVATE_KEY }} > ~/.ssh/staging.key
           chmod 600 ~/.ssh/staging.key
           cat >>~/.ssh/config <<END
           Host staging
-            HostName ${{ SERVER_HOST_NAME }}
-            User ${{ SSH_USER }}
+            HostName ${{ secrets.SERVER_HOST_NAME }}
+            User ${{ secrets.SSH_USER }}
             IdentityFile ~/.ssh/staging.key
             StrictHostKeyChecking no
           END
