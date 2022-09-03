@@ -65,8 +65,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .cors()
-                .and()
                 .authorizeRequests()
                 .antMatchers("/*").permitAll()
                 .antMatchers("/auth/**").permitAll()
