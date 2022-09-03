@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 public class DoneExerciseService {
 
     private IDoneExercisesRepository doneExercisesRepository;
-    private static final String READING_SPEED = "READING_SPEED";
 
     @Autowired
     public void setDoneExercisesRepository(IDoneExercisesRepository doneExercisesRepository) {
