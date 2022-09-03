@@ -13,7 +13,7 @@ public class HeadersFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        response.addHeader("Access-Control-Allow-Origin", "*");
+//        response.addHeader("Access-Control-Allow-Origin", "*");
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH");
         response.addHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
         filterChain.doFilter(request, response);
