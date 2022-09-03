@@ -80,6 +80,6 @@ public class GroupController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('teacher')")
     public Group addHomework(@RequestParam Long groupId, @RequestParam Long homeworkId) {
-        return groupService.setHomeworks(groupId, homeworkId);
+        return groupService.addHomework(groupId, homeworkId);
     }
 }

@@ -58,23 +58,26 @@ public class GroupService {
 
     @Transactional
     public void insertUserIntoGroup(Long groupId, Long userId) {
-        User user = userRepository.getReferenceById(userId);
-        Group group = groupRepository.getReferenceById(groupId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(()-> new EntityNotFoundException("No such user found"));
+        Group group = groupRepository.findById(groupId)
+                .orElseThrow(() -> new EntityNotFoundException("No such group found"));
         Set<User> users = group.getUsers();
         users.add(user);
         group.setUsers(users);
-        user.setGroups(user.getGroups()
-                .stream()
-                .filter(g -> !g.equals(group))
-                .collect(Collectors.toSet()));
+        Set<Group> groups = user.getGroups();
+        groups.add(group);
+        user.setGroups(groups);
         userRepository.save(user);
         groupRepository.save(group);
     }
 
     @Transactional
     public void deleteUserFromGroup(Long groupId, Long userId) {
-        User user = userRepository.getReferenceById(userId);
-        Group group = groupRepository.getReferenceById(groupId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(()-> new EntityNotFoundException("No such user found"));
+        Group group = groupRepository.findById(groupId)
+                .orElseThrow(() -> new EntityNotFoundException("No such group found"));
         Set<User> users = group.getUsers();
         users.remove(user);
         user.getGroups().remove(group);
@@ -83,7 +86,7 @@ public class GroupService {
         groupRepository.save(group);
     }
 
-    public Group setHomeworks(Long groupId, Long homeworkId) {
+    public Group addHomework(Long groupId, Long homeworkId) {
         Group group = groupRepository.findById(groupId)
                         .orElseThrow(EntityNotFoundException::new);
         Homework homework = homeworkRepository.findById(homeworkId)
