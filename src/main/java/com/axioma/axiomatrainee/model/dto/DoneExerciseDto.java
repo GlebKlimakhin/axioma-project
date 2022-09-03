@@ -15,7 +15,7 @@ public class DoneExerciseDto {
 
     DoneExerciseId doneExerciseId;
 
-    Integer score;
+    Double score;
 
     ExerciseType exerciseType;
 
