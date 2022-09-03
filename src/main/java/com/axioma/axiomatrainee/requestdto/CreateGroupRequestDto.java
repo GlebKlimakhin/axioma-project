@@ -13,7 +13,6 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CreateGroupRequestDto {
 
-    @NotBlank
     String name;
 
     List<Long> userIds;
