@@ -4,6 +4,7 @@ import com.axioma.axiomatrainee.model.Group;
 import com.axioma.axiomatrainee.utill.ValidEmail;
 import com.axioma.axiomatrainee.utill.ValidPassword;
 import com.axioma.axiomatrainee.utill.ValidUsername;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -60,6 +61,7 @@ public class User {
     @JoinTable(name = "users_groups",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "group_id"))
+    @JsonBackReference
     Set<Group> groups;
 
     @Enumerated(EnumType.STRING)

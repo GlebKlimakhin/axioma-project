@@ -58,8 +58,8 @@ public class GroupController {
     @PutMapping("/insert/groupId={groupId}&userId={userId}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('teacher')")
-    public Group insertUserIntoGroup(@PathVariable Long groupId, @PathVariable Long userId) {
-        return groupService.insertUserIntoGroup(groupId, userId);
+    public void insertUserIntoGroup(@PathVariable Long groupId, @PathVariable Long userId) {
+        groupService.insertUserIntoGroup(groupId, userId);
     }
 
     @PutMapping("/delete/groupId={groupId}&userId={userId}")

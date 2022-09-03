@@ -57,7 +57,7 @@ public class GroupService {
     }
 
     @Transactional
-    public Group insertUserIntoGroup(Long groupId, Long userId) {
+    public void insertUserIntoGroup(Long groupId, Long userId) {
         User user = userRepository.getReferenceById(userId);
         Group group = groupRepository.getReferenceById(groupId);
         Set<User> users = group.getUsers();
@@ -68,7 +68,7 @@ public class GroupService {
                 .filter(g -> !g.equals(group))
                 .collect(Collectors.toSet()));
         userRepository.save(user);
-        return groupRepository.save(group);
+        groupRepository.save(group);
     }
 
     @Transactional

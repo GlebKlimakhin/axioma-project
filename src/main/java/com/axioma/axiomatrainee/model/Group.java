@@ -1,6 +1,7 @@
 package com.axioma.axiomatrainee.model;
 
 import com.axioma.axiomatrainee.model.user.User;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -32,9 +33,10 @@ public class Group {
     inverseJoinColumns = @JoinColumn(name = "homework_id"))
     Set<Homework> homeworks;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_groups",
     joinColumns = @JoinColumn(name = "group_id"),
     inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JsonManagedReference
     Set<User> users;
 }
