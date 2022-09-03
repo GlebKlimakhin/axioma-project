@@ -12,7 +12,7 @@ import java.io.IOException;
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class HeadersFilter implements OncePerRequestFilter {
+public class HeadersFilter extends OncePerRequestFilter {
 
 
 //
