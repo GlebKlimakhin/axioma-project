@@ -32,7 +32,6 @@ public class DoneExerciseService {
     }
 
     public List<DoneExerciseDto> findAllByUserId(Long userId) {
-
         return doneExercisesRepository.findAllByDoneExerciseId_Userid(userId)
                 .stream()
                 .map(this::mapToDto)
@@ -48,6 +47,9 @@ public class DoneExerciseService {
     }
 
     private DoneExerciseDto mapToDto(DoneExercise exercise) {
+        if(exercise == null) {
+            throw new IllegalArgumentException("Empty exercises");
+        }
         return DoneExerciseDto.builder()
                 .doneExerciseId(exercise.getDoneExerciseId())
                 .exerciseType(exercise.getExerciseType())
