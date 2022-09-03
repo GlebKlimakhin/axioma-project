@@ -16,7 +16,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,17 +32,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.jwtConfigurer = jwtConfigurer;
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedMethods(Collections.singletonList("*"));
-        corsConfiguration.setAllowedOriginPatterns(Collections.singletonList("*"));
-        corsConfiguration.addAllowedHeader("Access-Control-Allow-Origin");
-        corsConfiguration.addAllowedMethod("*");
-        source.registerCorsConfiguration("/**", corsConfiguration);
-        return source;
-    }
+        @Bean
+        CorsConfigurationSource corsConfigurationSource() {
+            CorsConfiguration configuration = new CorsConfiguration();
+            configuration.setAllowedOrigins(List.of("*"));
+            configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
+            configuration.setAllowCredentials(true);
+            configuration.addAllowedOrigin("*");
+            configuration.addAllowedHeader("*");
+            configuration.addAllowedMethod("*");
+            UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+            source.registerCorsConfiguration("/**", configuration);
+            return source;
+        }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
