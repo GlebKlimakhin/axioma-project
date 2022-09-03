@@ -24,9 +24,8 @@ public class DoneExercise {
     DoneExerciseId doneExerciseId;
 
     @Column(name = "score")
-    @Digits(integer = 1, fraction = 0)
     @NotNull
-    Integer score;
+    Double score;
 
     @Enumerated
     @Column(name = "type")

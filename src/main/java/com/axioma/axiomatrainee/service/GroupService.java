@@ -6,6 +6,7 @@ import com.axioma.axiomatrainee.model.user.User;
 import com.axioma.axiomatrainee.repository.IGroupRepository;
 import com.axioma.axiomatrainee.repository.IHomeworkRepository;
 import com.axioma.axiomatrainee.repository.IUserRepository;
+import com.axioma.axiomatrainee.requestdto.CreateGroupRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,10 @@ public class GroupService {
         this.homeworkRepository = homeworkRepository;
     }
 
-    public Group save(Group group) {
+    public Group save(CreateGroupRequestDto request) {
+        Group group = new Group();
+        group.setName(request.getName());
+        group.setUsers(userRepository.findAllByIds(request.getUserIds()));
         return groupRepository.save(group);
     }
 

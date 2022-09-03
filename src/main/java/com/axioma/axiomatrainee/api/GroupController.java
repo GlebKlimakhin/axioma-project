@@ -1,6 +1,7 @@
 package com.axioma.axiomatrainee.api;
 
 import com.axioma.axiomatrainee.model.Group;
+import com.axioma.axiomatrainee.requestdto.CreateGroupRequestDto;
 import com.axioma.axiomatrainee.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,9 +36,9 @@ public class GroupController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAuthority('admin')")
-    public Group save(@RequestParam Group group) {
-        return groupService.save(group);
+    @PreAuthorize("hasAuthority('teacher')")
+    public Group save(@RequestBody CreateGroupRequestDto request) {
+        return groupService.save(request);
     }
 
     @GetMapping("/name={name}")

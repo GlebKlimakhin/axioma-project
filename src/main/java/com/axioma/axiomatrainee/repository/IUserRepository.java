@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface IUserRepository extends JpaRepository<User, Long> {
 
@@ -20,4 +21,7 @@ public interface IUserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("update User u set u.rating=u.rating + ?2 where u.id = ?1")
     void updateUserRatingBy(long userId, int increment);
+
+    @Query("select u from User u where u.id in :ids")
+    Set<User> findAllByIds(Iterable<Long> ids);
 }
