@@ -14,7 +14,6 @@ import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class GroupService {
@@ -62,14 +61,10 @@ public class GroupService {
                 .orElseThrow(()-> new EntityNotFoundException("No such user found"));
         Group group = groupRepository.findById(groupId)
                 .orElseThrow(() -> new EntityNotFoundException("No such group found"));
-        Set<User> users = group.getUsers();
-        users.add(user);
-        group.setUsers(users);
-        Set<Group> groups = user.getGroups();
-        groups.add(group);
-        user.setGroups(groups);
-        userRepository.save(user);
-        groupRepository.save(group);
+            Set<User> users = group.getUsers();
+            users.add(user);
+            group.setUsers(users);
+            groupRepository.save(group);
     }
 
     @Transactional
@@ -80,9 +75,7 @@ public class GroupService {
                 .orElseThrow(() -> new EntityNotFoundException("No such group found"));
         Set<User> users = group.getUsers();
         users.remove(user);
-        user.getGroups().remove(group);
         group.setUsers(users);
-        userRepository.save(user);
         groupRepository.save(group);
     }
 

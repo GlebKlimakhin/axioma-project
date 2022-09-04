@@ -14,4 +14,5 @@ public interface IGroupRepository extends JpaRepository<Group, Long> {
     List<Group> findAllByUsers(User user);
 
     List<Group> findAllByUsersContaining(User user);
+
 }
