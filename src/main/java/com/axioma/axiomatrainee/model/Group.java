@@ -1,6 +1,7 @@
 package com.axioma.axiomatrainee.model;
 
 import com.axioma.axiomatrainee.model.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.Hibernate;
@@ -28,7 +29,7 @@ public class Group {
     @NotBlank
     String name;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "groups_homeworks",
     joinColumns = @JoinColumn(name = "group_id"),
     inverseJoinColumns = @JoinColumn(name = "homework_id"))
@@ -38,6 +39,7 @@ public class Group {
     @JoinTable(name = "users_groups",
     joinColumns = @JoinColumn(name = "group_id"),
     inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     Set<User> users;
 
     @Override

@@ -64,6 +64,7 @@ public class User {
     @JoinTable(name = "users_groups",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "group_id"))
+    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     Set<Group> groups;
 
     @Enumerated(EnumType.STRING)
