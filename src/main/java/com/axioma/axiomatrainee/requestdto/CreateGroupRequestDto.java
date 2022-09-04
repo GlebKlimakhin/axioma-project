@@ -14,10 +14,6 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CreateGroupRequestDto {
 
-    @NotBlank
-    @JsonProperty
     String name;
-
-    @JsonProperty
     List<Long> userIds;
 }
