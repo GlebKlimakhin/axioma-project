@@ -18,6 +18,7 @@ import java.util.Set;
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
 public class Group {
 
     @Id
@@ -39,7 +40,6 @@ public class Group {
     @JoinTable(name = "users_groups",
     joinColumns = @JoinColumn(name = "group_id"),
     inverseJoinColumns = @JoinColumn(name = "user_id"))
-    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     Set<User> users;
 
     @Override
