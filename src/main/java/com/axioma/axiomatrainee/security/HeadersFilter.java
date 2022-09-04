@@ -1,5 +1,6 @@
 package com.axioma.axiomatrainee.security;
 
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@Order()
 public class HeadersFilter implements Filter {
 
     @Override
