@@ -6,6 +6,7 @@ import com.axioma.axiomatrainee.utill.ValidPassword;
 import com.axioma.axiomatrainee.utill.ValidUsername;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.Hibernate;
@@ -65,6 +66,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "group_id"))
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
+            @JsonManagedReference
     Set<Group> groups;
 
     @Enumerated(EnumType.STRING)

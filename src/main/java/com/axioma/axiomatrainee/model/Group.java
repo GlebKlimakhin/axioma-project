@@ -1,6 +1,7 @@
 package com.axioma.axiomatrainee.model;
 
 import com.axioma.axiomatrainee.model.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -40,6 +41,7 @@ public class Group {
     @JoinTable(name = "users_groups",
     joinColumns = @JoinColumn(name = "group_id"),
     inverseJoinColumns = @JoinColumn(name = "user_id"))
+            @JsonBackReference
     Set<User> users;
 
     @Override
