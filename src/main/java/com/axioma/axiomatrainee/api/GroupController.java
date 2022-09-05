@@ -39,6 +39,24 @@ public class GroupController {
 //    @PreAuthorize("hasAuthority('teacher')")
     public Group save(@RequestBody CreateGroupRequestDto request) {
         System.out.println("has entered controller method post groups");
+        System.out.println("has entered controller method post groups");
+        System.out.println("has entered controller method post groups");
+        System.out.println("has entered controller method post groups");
+        System.out.println("has entered controller method post groups");
+        System.out.println("has entered controller method post groups");
+        System.out.println("has entered controller method post groups");
+        System.out.println("has entered controller method post groups");
+        System.out.println("has entered controller method post groups");
+        System.out.println("has entered controller method post groups");
+        System.out.println("has entered controller method post groups");
+        System.out.println("has entered controller method post groups");
+        System.out.println("has entered controller method post groups");
+        System.out.println("has entered controller method post groups");
+        System.out.println("has entered controller method post groups");
+        System.out.println("has entered controller method post groups");
+        System.out.println("has entered controller method post groups");
+        System.out.println("has entered controller method post groups");
+
         return groupService.save(request);
     }
 
