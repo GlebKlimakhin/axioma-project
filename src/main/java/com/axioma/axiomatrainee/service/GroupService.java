@@ -57,26 +57,36 @@ public class GroupService {
 
     @Transactional
     public void insertUserIntoGroup(Long groupId, Long userId) {
+        System.out.println("method:1");
         User user = userRepository.findById(userId)
                 .orElseThrow(()-> new EntityNotFoundException("No such user found"));
         Group group = groupRepository.findById(groupId)
                 .orElseThrow(() -> new EntityNotFoundException("No such group found"));
-            Set<User> users = group.getUsers();
+        System.out.println("method:2");
+        Set<User> users = group.getUsers();
             users.add(user);
-            group.setUsers(users);
-            groupRepository.save(group);
+        System.out.println("method:3");
+        group.setUsers(users);
+        System.out.println("method:4");
+        groupRepository.save(group);
+        System.out.println("method:5");
     }
 
     @Transactional
     public void deleteUserFromGroup(Long groupId, Long userId) {
+        System.out.println("method:1");
         User user = userRepository.findById(userId)
                 .orElseThrow(()-> new EntityNotFoundException("No such user found"));
         Group group = groupRepository.findById(groupId)
                 .orElseThrow(() -> new EntityNotFoundException("No such group found"));
+        System.out.println("method:2");
         Set<User> users = group.getUsers();
         users.remove(user);
+        System.out.println("method:3");
         group.setUsers(users);
+        System.out.println("method:4");
         groupRepository.save(group);
+        System.out.println("method:5");
     }
 
     public Group addHomework(Long groupId, Long homeworkId) {
