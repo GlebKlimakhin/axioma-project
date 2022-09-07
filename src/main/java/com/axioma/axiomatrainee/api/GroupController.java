@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -37,12 +38,7 @@ public class GroupController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
 //    @PreAuthorize("hasAuthority('teacher')")
-    public Group save(@RequestBody CreateGroupRequestDto request) {
-        System.out.println("SAVING GROUP");
-        System.out.println("SAVING GROUP");
-        System.out.println("SAVING GROUP");
-        System.out.println("SAVING GROUP");
-        System.out.println("SAVING GROUP");
+    public Group save(@RequestBody @Valid CreateGroupRequestDto request) {
         return groupService.save(request);
     }
 

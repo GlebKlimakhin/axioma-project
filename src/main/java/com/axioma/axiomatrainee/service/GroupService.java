@@ -30,12 +30,6 @@ public class GroupService {
     }
 
     public Group save(CreateGroupRequestDto request) {
-        System.out.println("SAVING GROUP");
-        System.out.println("SAVING GROUP");
-        System.out.println("SAVING GROUP");
-        System.out.println("SAVING GROUP");
-        System.out.println("SAVING GROUP");
-
         Group group = new Group();
         group.setName(request.getName());
         group.setUsers(userRepository.findAllByIds(request.getUserIds()));
