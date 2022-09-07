@@ -38,6 +38,11 @@ public class GroupController {
     @ResponseStatus(HttpStatus.CREATED)
 //    @PreAuthorize("hasAuthority('teacher')")
     public Group save(@RequestBody CreateGroupRequestDto request) {
+        System.out.println("SAVING GROUP");
+        System.out.println("SAVING GROUP");
+        System.out.println("SAVING GROUP");
+        System.out.println("SAVING GROUP");
+        System.out.println("SAVING GROUP");
         return groupService.save(request);
     }
 
