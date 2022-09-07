@@ -38,25 +38,6 @@ public class GroupController {
     @ResponseStatus(HttpStatus.CREATED)
 //    @PreAuthorize("hasAuthority('teacher')")
     public Group save(@RequestBody CreateGroupRequestDto request) {
-        System.out.println("has entered controller method post groups");
-        System.out.println("has entered controller method post groups");
-        System.out.println("has entered controller method post groups");
-        System.out.println("has entered controller method post groups");
-        System.out.println("has entered controller method post groups");
-        System.out.println("has entered controller method post groups");
-        System.out.println("has entered controller method post groups");
-        System.out.println("has entered controller method post groups");
-        System.out.println("has entered controller method post groups");
-        System.out.println("has entered controller method post groups");
-        System.out.println("has entered controller method post groups");
-        System.out.println("has entered controller method post groups");
-        System.out.println("has entered controller method post groups");
-        System.out.println("has entered controller method post groups");
-        System.out.println("has entered controller method post groups");
-        System.out.println("has entered controller method post groups");
-        System.out.println("has entered controller method post groups");
-        System.out.println("has entered controller method post groups");
-
         return groupService.save(request);
     }
 
@@ -76,7 +57,7 @@ public class GroupController {
 
     @PutMapping("/insert/groupId={groupId}&userId={userId}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAuthority('teacher')")
+//    @PreAuthorize("hasAuthority('teacher')")
     public void insertUserIntoGroup(@PathVariable Long groupId, @PathVariable Long userId) {
         System.out.println("has entered controller method insert put groups");
         groupService.insertUserIntoGroup(groupId, userId);
@@ -84,7 +65,7 @@ public class GroupController {
 
     @PutMapping("/delete/groupId={groupId}&userId={userId}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAuthority('teacher')")
+//    @PreAuthorize("hasAuthority('teacher')")
     public void deleteUserFromGroup(@PathVariable Long groupId, @PathVariable Long userId) {
         System.out.println("has entered controller method delete groups");
         groupService.deleteUserFromGroup(groupId, userId);
