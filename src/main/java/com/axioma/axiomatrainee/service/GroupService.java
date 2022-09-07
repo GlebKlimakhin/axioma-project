@@ -33,6 +33,7 @@ public class GroupService {
         Group group = new Group();
         group.setName(request.getName());
         group.setUsers(userRepository.findAllByIds(request.getUserIds()));
+        group.setHomeworks(null);
         return groupRepository.save(group);
     }
 
