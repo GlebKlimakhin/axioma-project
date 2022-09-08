@@ -40,9 +40,7 @@ public class GroupController {
     @ResponseStatus(HttpStatus.CREATED)
 //    @PreAuthorize("hasAuthority('teacher')")
     public ResponseEntity<Group> save(@RequestBody @Valid CreateGroupRequestDto request) {
-        ResponseEntity<Group> response = ResponseEntity.ok(groupService.save(request));
-        response.getHeaders().add("Access-Control-Allow-Origin", "*");
-        return response;
+        return ResponseEntity.ok(groupService.save(request));
     }
 
     @GetMapping("/name={name}")
