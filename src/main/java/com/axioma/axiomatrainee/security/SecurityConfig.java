@@ -16,6 +16,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 @ComponentScan(basePackages = "com.axioma.axiomatrainee")
@@ -31,7 +33,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowedMethods(List.of("PUT", "POST", "OPTIONS", "GET", "PATCH"));
+        corsConfiguration.setAllowedHeaders(List.of("Content-Type", "Accept", "Origin"));
+        source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
     }
 
