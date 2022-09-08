@@ -37,7 +37,6 @@ public class GroupController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
 //    @PreAuthorize("hasAuthority('teacher')")
     public ResponseEntity<Group> save(@RequestBody @Valid CreateGroupRequestDto request) {
         return ResponseEntity.ok(groupService.save(request));
