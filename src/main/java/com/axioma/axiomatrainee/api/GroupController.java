@@ -5,6 +5,7 @@ import com.axioma.axiomatrainee.requestdto.CreateGroupRequestDto;
 import com.axioma.axiomatrainee.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,8 +39,10 @@ public class GroupController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
 //    @PreAuthorize("hasAuthority('teacher')")
-    public Group save(@RequestBody @Valid CreateGroupRequestDto request) {
-        return groupService.save(request);
+    public ResponseEntity<Group> save(@RequestBody @Valid CreateGroupRequestDto request) {
+        ResponseEntity<Group> response = new ResponseEntity<>();
+        response.getHeaders().add("Access-control-allow-origin", "*");
+        return ResponseEntity.ok(groupService.save(request));
     }
 
     @GetMapping("/name={name}")
