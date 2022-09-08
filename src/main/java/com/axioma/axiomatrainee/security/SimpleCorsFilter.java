@@ -23,7 +23,7 @@ public class SimpleCorsFilter implements Filter {
 
         // Authorize (allow) all domains to consume the content
         ((HttpServletResponse) res).addHeader("Access-Control-Allow-Origin", "*");
-        ((HttpServletResponse) res).addHeader("Access-Control-Allow-Methods","GET, OPTIONS, HEAD, PUT, POST");
+        ((HttpServletResponse) res).addHeader("Access-Control-Allow-Methods","GET, OPTIONS, HEAD, PUT, POST, PATCH");
 
         HttpServletResponse resp = (HttpServletResponse) res;
 
