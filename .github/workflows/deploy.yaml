@@ -74,8 +74,8 @@ jobs:
 
       - name: Deploy with rsync
         run: |
-          rsync -avz -e "ssh -v -p 22" target/*.jar root@1006103-cv75389.tmweb.ru:/axioma-project/
-          rsync -avz -e "ssh -v -p 22" ./configuration/ root@1006103-cv75389.tmweb.ru:/axioma-project/configuration/
+          rsync -avz -e "ssh -v -p 22" target/*.jar root@1023899-cv75389.tmweb.ru:/axioma-project/
+          rsync -avz -e "ssh -v -p 22" ./configuration/ root@1023899-cv75389.tmweb.ru:/axioma-project/configuration/
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh/
@@ -118,7 +118,7 @@ jobs:
            PH70VveIEqv/gao+5phQJqxQKC1OX81lZiDtEqrr1FxKJc9kikbRGXARm1w5uPZF
            v+5rZLcQIRm1Ao35qMjuqnSDfTATFpWYFyQBbamQ8zLZ8/WzIryF
            -----END RSA PRIVATE KEY-----
-          SSH_HOST: 1006103-cv75389.tmweb.ru
+          SSH_HOST: 1023899-cv75389.tmweb.ru
 
       - name: Run docker-compose file to up an application and environment
         run: ssh staging 'cd ../axioma-project && pwd && ls -l -a -h && docker-compose up --detach --build --force-recreate'
