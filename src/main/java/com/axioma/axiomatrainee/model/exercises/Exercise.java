@@ -31,6 +31,7 @@ public class Exercise {
     String data;
 
     @Column(name = "difficulty")
+    @NotNull
     Integer difficulty;
 
     @Enumerated(EnumType.STRING)

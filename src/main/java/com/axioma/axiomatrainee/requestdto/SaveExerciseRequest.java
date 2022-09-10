@@ -20,4 +20,12 @@ public class SaveExerciseRequest {
 
     @NotNull
     ExerciseType type;
+
+    @NotBlank
+    String name;
+
+    @NotNull
+    Integer difficulty;
+
+
 }
