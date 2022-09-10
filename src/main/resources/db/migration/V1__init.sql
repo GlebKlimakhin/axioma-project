@@ -1,6 +1,6 @@
 create table exercises(
 id bigserial not null unique,
-name varchar(55) not null unique,
+name varchar(55) not null,
 difficulty integer not null,
 data text not null,
 type varchar(50) not null,

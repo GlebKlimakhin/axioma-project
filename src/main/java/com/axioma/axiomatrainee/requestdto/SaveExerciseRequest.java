@@ -26,6 +26,4 @@ public class SaveExerciseRequest {
 
     @NotNull
     Integer difficulty;
-
-
 }
