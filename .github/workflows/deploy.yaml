@@ -71,7 +71,7 @@ jobs:
           known_hosts: unnecessary
 
       - name: Adding Known Hosts
-        run: ssh-keyscan -p 22 -H 1006103-cv75389.tmweb.ru  >> ~/.ssh/known_hosts
+        run: ssh-keyscan -p 22 -H 1023899-cv75389.tmweb.ru  >> ~/.ssh/known_hosts
 
       - name: Deploy with rsync
         run: |
