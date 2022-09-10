@@ -22,10 +22,6 @@ public class ExerciseService {
         this.exerciseRepository = exerciseRepository;
     }
 
-    public List<Exercise> findAll() {
-        return exerciseRepository.findAll();
-    }
-
     public Optional<Exercise> findById(Long id, ExerciseType type) {
         return exerciseRepository.findByIdAndExerciseTypeEquals(id, type);
     }
@@ -36,7 +32,6 @@ public class ExerciseService {
 
     //todo deleteById on Service layer
 
-    @Transactional
     public Exercise save(SaveExerciseRequest request) {
         Exercise exercise = new Exercise();
         exercise.setExerciseType(request.getType());
