@@ -45,7 +45,6 @@ public class ReadingSpeedExerciseController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAuthority('teacher')")
     public Exercise save(@RequestBody @Valid SaveExerciseRequest request) {
         return exerciseService.save(request);
     }

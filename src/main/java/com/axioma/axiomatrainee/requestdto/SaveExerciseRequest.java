@@ -17,13 +17,10 @@ public class SaveExerciseRequest {
 
     @NotBlank
     String data;
-
     @NotNull
     ExerciseType type;
-
     @NotBlank
     String name;
-
     @NotNull
     Integer difficulty;
 }

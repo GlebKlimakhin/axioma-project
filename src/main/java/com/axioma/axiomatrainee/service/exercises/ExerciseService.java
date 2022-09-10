@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -36,8 +38,8 @@ public class ExerciseService {
         Exercise exercise = new Exercise();
         exercise.setExerciseType(request.getType());
         exercise.setData(request.getData());
-        exercise.setName(request.getName());
         exercise.setDifficulty(request.getDifficulty());
+        exercise.setName(request.getName());
         return exerciseRepository.save(exercise);
     }
 
