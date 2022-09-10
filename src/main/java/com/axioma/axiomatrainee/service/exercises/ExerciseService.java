@@ -41,6 +41,8 @@ public class ExerciseService {
         Exercise exercise = new Exercise();
         exercise.setExerciseType(request.getType());
         exercise.setData(request.getData());
+        exercise.setName(request.getName());
+        exercise.setDifficulty(request.getDifficulty());
         return exerciseRepository.save(exercise);
     }
 
