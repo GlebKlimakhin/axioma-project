@@ -33,18 +33,18 @@ services:
         limits:
           memory: 256m
 
-#  proxy:
-#    build:
-#      context: .
-#      dockerfile: docker/proxy/Dockerfile
-#    container_name: nginx
-#    ports:
-#      - "80:80"
-#      - "443:443"
-#    links:
-#      - app
-#    networks:
-#      - proxy
+  proxy:
+    build:
+      context: .
+      dockerfile: docker/proxy/Dockerfile
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - app
+    networks:
+      - proxy
 
   grafana:
     build: './configuration/grafana'

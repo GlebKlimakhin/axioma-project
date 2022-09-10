@@ -58,7 +58,6 @@ public class GroupService {
 
     @Transactional
     public void insertUserIntoGroup(Long groupId, Long userId) {
-        System.out.println("method:1");
         User user = userRepository.findById(userId)
                 .orElseThrow(()-> new EntityNotFoundException("No such user found"));
         Group group = groupRepository.findById(groupId)
