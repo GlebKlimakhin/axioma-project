@@ -32,8 +32,6 @@ public class ExerciseService {
         exerciseRepository.deleteById(id);
     }
 
-    //todo deleteById on Service layer
-
     public Exercise save(SaveExerciseRequest request) {
         Exercise exercise = new Exercise();
         exercise.setExerciseType(request.getType());

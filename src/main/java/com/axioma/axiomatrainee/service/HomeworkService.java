@@ -56,8 +56,9 @@ public class HomeworkService {
     }
 
     public Set<Homework> findAllByGroupId(Long groupId) {
-        return groupRepository.findById(groupId)
+        return Optional.ofNullable(groupRepository.findById(groupId)
                 .orElseThrow(() -> new EntityNotFoundException("No such group found"))
-                .getHomeworks();
+                .getHomeworks()).orElseThrow(() -> new EntityNotFoundException("No homeworks for this group yet"));
     }
+
 }

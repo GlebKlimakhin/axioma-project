@@ -32,9 +32,9 @@ public class RandomExerciseService {
     
     private Set<Exercise> removeDoneExercises(Set<Exercise> exercises, List<DoneExerciseDto> done) {
         Iterator<Exercise> iterator = exercises.iterator();
-        for (int i = 0; i < done.size(); i++) {
+        for (DoneExerciseDto dto : done) {
             while (iterator.hasNext()) {
-                if(done.get(i).getDoneExerciseId().getExerciseId().equals(iterator.next().getId())) {
+                if (dto.getDoneExerciseId().getExerciseId().equals(iterator.next().getId())) {
                     iterator.remove();
                 }
             }
