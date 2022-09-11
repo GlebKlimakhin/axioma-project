@@ -20,12 +20,11 @@ public class ReadingSpeedExerciseController {
 
     public static final ExerciseType TYPE = ExerciseType.READING_SPEED;
 
-    private ExerciseService exerciseService;
-    private RandomExerciseService randomExerciseService;
+    private final ExerciseService exerciseService;
+    private final RandomExerciseService randomExerciseService;
 
-    @Autowired
-    public void setService(ExerciseService service, RandomExerciseService randomExerciseService) {
-        this.exerciseService = service;
+    public ReadingSpeedExerciseController(ExerciseService exerciseService, RandomExerciseService randomExerciseService) {
+        this.exerciseService = exerciseService;
         this.randomExerciseService = randomExerciseService;
     }
 

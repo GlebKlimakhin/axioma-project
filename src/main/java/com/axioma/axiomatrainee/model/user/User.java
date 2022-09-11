@@ -25,7 +25,7 @@ import java.util.Set;
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@JsonIgnoreProperties("groups")
+//@JsonIgnoreProperties("groups")
 public class User {
 
     @Id
