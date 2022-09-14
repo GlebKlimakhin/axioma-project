@@ -1,7 +1,6 @@
 package com.axioma.axiomatrainee.model;
 
 import com.axioma.axiomatrainee.model.user.User;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.Hibernate;

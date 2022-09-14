@@ -30,6 +30,7 @@ public class DoneExerciseController {
     }
 
     @GetMapping("/userId={userId}")
+    @ResponseStatus(HttpStatus.OK)
     public List<DoneExerciseDto> findAllByUserId(@PathVariable Long userId) {
         return doneExerciseService.findAllByUserId(userId);
     }
