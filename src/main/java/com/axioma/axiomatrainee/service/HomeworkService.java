@@ -34,7 +34,10 @@ public class HomeworkService {
         this.groupRepository = groupRepository;
     }
 
-    @Transactional
+    public List<Homework> findAll() {
+        return homeworkRepository.findAll();
+    }
+
     public Homework createHomework(CreateHomeworkRequestDto createHomeworkRequestDto) {
         Homework homework = new Homework();
         Set<Exercise> requestedExercises = new HashSet<>();

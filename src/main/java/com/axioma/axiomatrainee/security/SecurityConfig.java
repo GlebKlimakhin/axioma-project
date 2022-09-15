@@ -53,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/swagger-ui/**").permitAll()
+                .antMatchers("/v3/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/actuator/**").permitAll()
                 .anyRequest()
@@ -63,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/swagger-ui/**");
+        web.ignoring().antMatchers("/swagger-ui/**", "/v3/**");
     }
 
     @Bean
