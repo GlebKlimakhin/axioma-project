@@ -50,5 +50,10 @@ public class HomeworkController {
         return homeworkService.findByDescriptionContaining(description);
     }
 
+    @GetMapping("/userId={userId}")
+    public Set<Homework> findAllByUserId(@PathVariable Long userId) {
+        return homeworkService.findAllByUserId(userId);
+    }
+
 
 }

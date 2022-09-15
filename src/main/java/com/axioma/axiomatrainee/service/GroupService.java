@@ -62,16 +62,14 @@ public class GroupService {
                 .orElseThrow(()-> new EntityNotFoundException("No such user found"));
         Group group = groupRepository.findById(groupId)
                 .orElseThrow(() -> new EntityNotFoundException("No such group found"));
-        System.out.println("method:2");
         Set<User> users = group.getUsers();
-            users.add(user);
+        users.add(user);
         group.setUsers(users);
         groupRepository.save(group);
     }
 
     @Transactional
     public void deleteUserFromGroup(Long groupId, Long userId) {
-        System.out.println("method:1");
         User user = userRepository.findById(userId)
                 .orElseThrow(()-> new EntityNotFoundException("No such user found"));
         Group group = groupRepository.findById(groupId)

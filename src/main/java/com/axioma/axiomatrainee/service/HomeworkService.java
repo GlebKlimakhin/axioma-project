@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -59,6 +60,16 @@ public class HomeworkService {
         return Optional.ofNullable(groupRepository.findById(groupId)
                 .orElseThrow(() -> new EntityNotFoundException("No such group found"))
                 .getHomeworks()).orElseThrow(() -> new EntityNotFoundException("No homeworks for this group yet"));
+    }
+
+    public Set<Homework> findAllByUserId(Long userId) {
+        return groupRepository.findAll()
+                .stream()
+                .filter(g -> g.getUsers()
+                        .stream()
+                        .anyMatch(u -> u.getId().equals(userId)))
+                .flatMap(g -> g.getHomeworks().stream().distinct())
+                .collect(Collectors.toSet());
     }
 
 }
