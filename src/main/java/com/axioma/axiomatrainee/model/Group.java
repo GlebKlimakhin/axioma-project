@@ -34,7 +34,7 @@ public class Group {
     inverseJoinColumns = @JoinColumn(name = "homework_id"))
     Set<Homework> homeworks;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_groups",
     joinColumns = @JoinColumn(name = "group_id"),
     inverseJoinColumns = @JoinColumn(name = "user_id"))

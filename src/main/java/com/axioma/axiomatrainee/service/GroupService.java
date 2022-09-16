@@ -92,6 +92,7 @@ public class GroupService {
     }
 
     public void deleteGroupById(Long id) {
+
         groupRepository.deleteById(id);
     }
 

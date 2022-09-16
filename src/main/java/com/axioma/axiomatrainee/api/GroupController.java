@@ -60,7 +60,6 @@ public class GroupController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('teacher')")
     public void insertUserIntoGroup(@PathVariable Long groupId, @PathVariable Long userId) {
-        System.out.println("has entered controller method insert put groups");
         groupService.insertUserIntoGroup(groupId, userId);
     }
 
@@ -72,7 +71,7 @@ public class GroupController {
         groupService.deleteUserFromGroup(groupId, userId);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('admin')")
     public void deleteById(@PathVariable Long id) {
