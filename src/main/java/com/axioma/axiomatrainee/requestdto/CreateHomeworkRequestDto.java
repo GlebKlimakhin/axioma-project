@@ -23,4 +23,6 @@ public class CreateHomeworkRequestDto {
 
     @NotNull
     long unixExpirationDate;
+
+    Long groupId;
 }

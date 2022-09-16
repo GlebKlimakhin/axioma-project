@@ -55,7 +55,7 @@ public class HomeworkController {
         return homeworkService.findAllByUserId(userId);
     }
 
-    @GetMapping()
+    @GetMapping
     public List<Homework> findAll() {
         return homeworkService.findAll();
     }

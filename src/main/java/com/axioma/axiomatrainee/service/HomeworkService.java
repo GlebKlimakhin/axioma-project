@@ -38,16 +38,19 @@ public class HomeworkService {
         return homeworkRepository.findAll();
     }
 
-    public Homework createHomework(CreateHomeworkRequestDto createHomeworkRequestDto) {
+    public Homework createHomework(CreateHomeworkRequestDto request) {
         Homework homework = new Homework();
         Set<Exercise> requestedExercises = new HashSet<>();
-        exerciseRepository.findAllByExerciseIds(createHomeworkRequestDto.getExercisesIds())
+        exerciseRepository.findAllByExerciseIds(request.getExercisesIds())
                 .forEach(requestedExercises::add);
         homework.setExercises(requestedExercises);
-        homework.setDescription(createHomeworkRequestDto.getDescription());
+        homework.setDescription(request.getDescription());
         homework.setExpirationDate(
-                DateParser.parseFromUnix(createHomeworkRequestDto.getUnixExpirationDate())
+                DateParser.parseFromUnix(request.getUnixExpirationDate())
         );
+        homework.setGroups(
+                Set.of(groupRepository.findById(request.getGroupId())
+                .orElseThrow(() -> new EntityNotFoundException("Cannot create homework, no such group exists"))));
         return homeworkRepository.save(homework);
     }
 
