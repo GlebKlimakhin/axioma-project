@@ -1,6 +1,7 @@
 package com.axioma.axiomatrainee.model;
 
 import com.axioma.axiomatrainee.model.exercises.Exercise;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
@@ -37,7 +38,8 @@ public class Homework {
     @JoinTable(name = "groups_homeworks",
             joinColumns = @JoinColumn(name = "homework_id"),
             inverseJoinColumns = @JoinColumn(name = "group_id"))
-    Set<Group> groups;
+    @JsonIgnore
+      Set<Group> groups;
 
     @CreationTimestamp
     @Column(name = "creation_date")
