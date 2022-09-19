@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -16,7 +17,7 @@ import java.util.Set;
 public class CreateHomeworkRequestDto {
 
     @NotNull
-    Set<Long> exercisesIds;
+    List<Long> exercisesIds;
 
     @NotBlank
     String description;
@@ -24,5 +25,6 @@ public class CreateHomeworkRequestDto {
     @NotNull
     long unixExpirationDate;
 
-    Long groupId;
+    @NotNull
+    Iterable<Long> groupIds;
 }
