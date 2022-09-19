@@ -30,10 +30,11 @@ public class GroupService {
     }
 
     public Group save(CreateGroupRequestDto request) {
-        Group group = new Group();
-        group.setName(request.getName());
-        group.setUsers(userRepository.findAllByIds(request.getUserIds()));
-        group.setHomeworks(null);
+        Group group = Group.builder()
+                        .name(request.getName())
+                        .users(userRepository.findAllByIds(request.getUserIds()))
+                        .homeworks(null)
+                        .build();
         return groupRepository.save(group);
     }
 
@@ -92,7 +93,6 @@ public class GroupService {
     }
 
     public void deleteGroupById(Long id) {
-
         groupRepository.deleteById(id);
     }
 

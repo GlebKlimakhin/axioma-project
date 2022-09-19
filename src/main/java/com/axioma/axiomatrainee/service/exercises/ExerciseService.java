@@ -33,11 +33,12 @@ public class ExerciseService {
     }
 
     public Exercise save(SaveExerciseRequest request) {
-        Exercise exercise = new Exercise();
-        exercise.setExerciseType(request.getType());
-        exercise.setData(request.getData());
-        exercise.setDifficulty(request.getDifficulty());
-        exercise.setName(request.getName());
+        Exercise exercise = Exercise.builder()
+                        .exerciseType(request.getType())
+                        .name(request.getName())
+                        .difficulty(request.getDifficulty())
+                        .data(request.getData())
+                        .build();
         return exerciseRepository.save(exercise);
     }
 
