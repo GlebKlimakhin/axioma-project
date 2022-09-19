@@ -41,8 +41,7 @@ public class HomeworkService {
     public Homework createHomework(CreateHomeworkRequestDto request) {
         Homework homework = new Homework();
         Set<Exercise> requestedExercises = new HashSet<>();
-        exerciseRepository.findAllByExerciseIds(request.getExercisesIds())
-                .forEach(requestedExercises::add);
+        request.getExercisesIds().stream().distinct().forEach(e -> requestedExercises.add(exerciseRepository.findById(e).orElseThrow(() -> new EntityNotFoundException("No such exercise found"))));
         homework.setExercises(requestedExercises);
         homework.setDescription(request.getDescription());
         homework.setExpirationDate(
