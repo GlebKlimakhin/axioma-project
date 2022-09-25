@@ -39,7 +39,7 @@ public class Homework {
             joinColumns = @JoinColumn(name = "homework_id"),
             inverseJoinColumns = @JoinColumn(name = "group_id"))
     @JsonIgnore
-      Set<Group> groups;
+    Set<Group> groups;
 
     @CreationTimestamp
     @Column(name = "creation_date")

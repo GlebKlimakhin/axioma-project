@@ -1,5 +1,6 @@
 package com.axioma.axiomatrainee.repository;
 
+import com.axioma.axiomatrainee.model.Group;
 import com.axioma.axiomatrainee.model.Homework;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -30,6 +31,10 @@ public class UserService {
     public User findById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
+    }
+
+    public Set<User> findAllByIds(Iterable<Long> ids) {
+        return userRepository.findAllByIds(ids);
     }
 
     public User save(SaveUserRequestDto request) {
