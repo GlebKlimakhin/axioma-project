@@ -12,6 +12,7 @@ import com.axioma.axiomatrainee.repository.IGroupRepository;
 import com.axioma.axiomatrainee.repository.IHomeworkRepository;
 import com.axioma.axiomatrainee.requestdto.CreateHomeworkRequestDto;
 import com.axioma.axiomatrainee.utill.DateParser;
+import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,17 +44,13 @@ public class HomeworkService {
 
     public Homework createHomework(CreateHomeworkRequestDto request) {
         Homework homework = new Homework();
-        Set<Exercise> requestedExercises = new HashSet<>();
-        exerciseRepository.findAllByExerciseIds(request.getExercisesIds())
-                .forEach(requestedExercises::add);
-        homework.setExercises(requestedExercises);
+        homework.setExercises(Sets.newHashSet(
+                exerciseRepository.findAllByExerciseIds(request.getExercisesIds())));
         homework.setDescription(request.getDescription());
         homework.setExpirationDate(
-                DateParser.parseFromUnix(request.getUnixExpirationDate())
-        );
+                DateParser.parseFromUnix(request.getUnixExpirationDate()));
         homework.setGroups(
-                Set.of(groupRepository.findById(request.getGroupId())
-                .orElseThrow(() -> new EntityNotFoundException("Cannot create homework, no such group exists"))));
+                Sets.newHashSet(groupRepository.findAllByGroupIds(request.getGroupIds())));
         return homeworkRepository.save(homework);
     }
 

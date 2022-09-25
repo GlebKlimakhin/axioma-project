@@ -18,6 +18,9 @@ import java.util.Set;
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@NamedEntityGraph(name = "Homeworks.exercises",
+        attributeNodes = @NamedAttributeNode("exercises")
+)
 public class Homework {
 
     @Id
@@ -31,7 +34,7 @@ public class Homework {
     @Column(name = "description")
     String description;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name ="homeworks_exercises",
             joinColumns = @JoinColumn(name = "homework_id"),
             inverseJoinColumns = @JoinColumn(name = "exercise_id"))
