@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/users")
@@ -36,6 +37,13 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public User findById(@PathVariable Long id) {
         return userService.findById(id);
+    }
+
+    @GetMapping("/ids")
+    @PreAuthorize("hasAuthority('user')")
+    @ResponseStatus(HttpStatus.OK)
+    public Set<User> findUsersByIds(@RequestBody Iterable<Long> ids) {
+        return userService.findAllByIds(ids);
     }
 
     @PostMapping
@@ -67,6 +75,4 @@ public class UserController {
                 requestDto.getRatingIncNumber()
         );
     }
-
-
 }

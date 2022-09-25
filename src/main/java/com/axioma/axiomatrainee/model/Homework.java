@@ -25,6 +25,9 @@ public class Homework {
     @Column(name = "id")
     Long id;
 
+    @Column(name = "title")
+    String title;
+
     @Column(name = "description")
     String description;
 

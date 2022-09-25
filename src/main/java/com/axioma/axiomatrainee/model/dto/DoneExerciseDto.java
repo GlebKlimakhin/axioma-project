@@ -14,11 +14,8 @@ import lombok.experimental.FieldDefaults;
 public class DoneExerciseDto {
 
     DoneExerciseId doneExerciseId;
-
     Double score;
-
     ExerciseType exerciseType;
-
     Long unixDate;
 
 }

@@ -12,4 +12,6 @@ public interface IHomeworkRepository extends JpaRepository<Homework, Long> {
 
     List<Homework> findAllByDescriptionContainingIgnoreCase(String description);
 
+    List<Homework> findAllByTitleContaining(String title);
+
 }

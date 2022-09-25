@@ -16,20 +16,12 @@ import java.util.List;
 public class UserDto {
 
     Long id;
-
     String username;
-
     String password;
-
     String firstname;
-
     String lastname;
-
     Status status;
-
     String email;
-
     List<Group> groups;
-
     Role role;
 }

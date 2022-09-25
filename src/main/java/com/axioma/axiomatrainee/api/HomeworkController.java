@@ -2,6 +2,7 @@ package com.axioma.axiomatrainee.api;
 
 
 import com.axioma.axiomatrainee.model.Homework;
+import com.axioma.axiomatrainee.model.dto.HomeworkDto;
 import com.axioma.axiomatrainee.requestdto.CreateHomeworkRequestDto;
 import com.axioma.axiomatrainee.service.HomeworkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,30 +35,33 @@ public class HomeworkController {
 
     @GetMapping("/groupId={groupId}")
     @ResponseStatus(HttpStatus.OK)
-    public Set<Homework> findByGroupId(@PathVariable Long groupId) {
+    public Set<HomeworkDto> findByGroupId(@PathVariable Long groupId) {
         return homeworkService.findAllByGroupId(groupId);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Homework findById(@PathVariable Long id) {
-        return homeworkService.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Homework with such id has not been created yet"));
+    public HomeworkDto findById(@PathVariable Long id) {
+        return homeworkService.findById(id);
     }
 
     @GetMapping("/description={description}")
-    public List<Homework> findAllByDescriptionContaining(@PathVariable String description) {
+    public List<HomeworkDto> findAllByDescriptionContaining(@PathVariable String description) {
         return homeworkService.findByDescriptionContaining(description);
     }
 
     @GetMapping("/userId={userId}")
-    public Set<Homework> findAllByUserId(@PathVariable Long userId) {
+    public Set<HomeworkDto> findAllByUserId(@PathVariable Long userId) {
         return homeworkService.findAllByUserId(userId);
     }
 
     @GetMapping
-    public List<Homework> findAll() {
+    public List<HomeworkDto> findAll() {
         return homeworkService.findAll();
     }
 
+    @GetMapping("/title={title}")
+    public List<HomeworkDto> findAllByTitleContaining(@PathVariable String title) {
+        return homeworkService.findByTitle(title);
+    }
 }
