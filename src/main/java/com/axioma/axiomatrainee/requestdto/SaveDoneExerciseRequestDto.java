@@ -15,4 +15,5 @@ public class SaveDoneExerciseRequestDto {
     DoneExerciseId doneExerciseId;
     Integer score;
     ExerciseType exerciseType;
+    Long doneDate;
 }

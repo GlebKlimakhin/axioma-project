@@ -40,7 +40,7 @@ public class Homework {
             inverseJoinColumns = @JoinColumn(name = "exercise_id"))
     Set<Exercise> exercises;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(name = "groups_homeworks",
             joinColumns = @JoinColumn(name = "homework_id"),
             inverseJoinColumns = @JoinColumn(name = "group_id"))
