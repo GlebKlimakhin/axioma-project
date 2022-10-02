@@ -37,7 +37,6 @@ public class DoneExerciseService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
     public DoneExercise save(SaveDoneExerciseRequestDto requestDto) {
         DoneExercise doneExercise = new DoneExercise();
         doneExercise.setDoneExerciseId(requestDto.getDoneExerciseId());

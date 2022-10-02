@@ -19,6 +19,9 @@ public class CreateHomeworkRequestDto {
     @NotNull
     List<Long> exercisesIds;
 
+    @NotNull
+    String title;
+
     @NotBlank
     String description;
 
@@ -27,4 +30,5 @@ public class CreateHomeworkRequestDto {
 
     @NotNull
     Iterable<Long> groupIds;
+
 }

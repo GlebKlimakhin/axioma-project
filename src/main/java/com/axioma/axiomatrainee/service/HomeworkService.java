@@ -42,7 +42,7 @@ public class HomeworkService {
         return homeworkRepository.findAll().stream().map(this::toDto).collect(Collectors.toList());
     }
 
-    public Homework createHomework(CreateHomeworkRequestDto request) {
+    public HomeworkDto createHomework(CreateHomeworkRequestDto request) {
         Homework homework = new Homework();
         homework.setExercises(Sets.newHashSet(
                 exerciseRepository.findAllByExerciseIds(request.getExercisesIds())));
@@ -51,7 +51,9 @@ public class HomeworkService {
                 DateParser.parseFromUnix(request.getUnixExpirationDate()));
         homework.setGroups(
                 Sets.newHashSet(groupRepository.findAllByGroupIds(request.getGroupIds())));
-        return homeworkRepository.save(homework);
+        homework.setTitle(request.getTitle());
+        homeworkRepository.save(homework);
+        return toDto(homework);
     }
 
     public HomeworkDto findById(Long id) {

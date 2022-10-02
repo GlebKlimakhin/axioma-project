@@ -9,9 +9,10 @@ import com.axioma.axiomatrainee.repository.IUserRepository;
 import com.axioma.axiomatrainee.requestdto.CreateGroupRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
 
@@ -69,7 +70,7 @@ public class GroupService {
         groupRepository.save(group);
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void deleteUserFromGroup(Long groupId, Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(()-> new EntityNotFoundException("No such user found"));
@@ -81,14 +82,13 @@ public class GroupService {
         groupRepository.save(group);
     }
 
+    @org.springframework.transaction.annotation.Transactional
     public Group addHomework(Long groupId, Long homeworkId) {
         Group group = groupRepository.findById(groupId)
                         .orElseThrow(EntityNotFoundException::new);
         Homework homework = homeworkRepository.findById(homeworkId)
                         .orElseThrow(EntityNotFoundException::new);
-        Set<Homework> homeworks = group.getHomeworks();
-        homeworks.add(homework);
-        group.setHomeworks(homeworks);
+        group.getHomeworks().add(homework);
         return groupRepository.save(group);
     }
 

@@ -3,6 +3,7 @@ package com.axioma.axiomatrainee.api;
 
 import com.axioma.axiomatrainee.model.Homework;
 import com.axioma.axiomatrainee.model.dto.HomeworkDto;
+import com.axioma.axiomatrainee.model.exercises.DoneExerciseId;
 import com.axioma.axiomatrainee.requestdto.CreateHomeworkRequestDto;
 import com.axioma.axiomatrainee.service.HomeworkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class HomeworkController {
     @PostMapping
     @PreAuthorize("hasAuthority('teacher')")
     @ResponseStatus(HttpStatus.CREATED)
-    public Homework create(@RequestBody @Valid CreateHomeworkRequestDto request) {
+    public HomeworkDto create(@RequestBody @Valid CreateHomeworkRequestDto request) {
         return homeworkService.createHomework(request);
     }
 
@@ -63,5 +64,10 @@ public class HomeworkController {
     @GetMapping("/title={title}")
     public List<HomeworkDto> findAllByTitleContaining(@PathVariable String title) {
         return homeworkService.findByTitle(title);
+    }
+
+    @GetMapping("/done/groupId={groupId}&homeworkId={homeworkId}")
+    public List<DoneExerciseId> findAllDoneInGroup(@PathVariable Long groupId, @PathVariable Long homeworkId) {
+        return homeworkService.findAllUsersDone(groupId, homeworkId);
     }
 }
