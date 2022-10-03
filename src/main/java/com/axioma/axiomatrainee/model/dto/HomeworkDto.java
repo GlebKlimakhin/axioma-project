@@ -20,8 +20,7 @@ public class HomeworkDto {
     String title;
     String description;
     Set<Exercise> exercises;
-    @JsonIgnore
-    Set<Group> groups;
+    Group group;
     Long creationDate;
     Long expirationDate;
 }

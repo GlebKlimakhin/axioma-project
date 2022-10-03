@@ -82,7 +82,6 @@ public class GroupService {
         groupRepository.save(group);
     }
 
-    @org.springframework.transaction.annotation.Transactional
     public Group addHomework(Long groupId, Long homeworkId) {
         Group group = groupRepository.findById(groupId)
                         .orElseThrow(EntityNotFoundException::new);

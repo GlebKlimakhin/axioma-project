@@ -3,6 +3,7 @@ package com.axioma.axiomatrainee.api;
 import com.axioma.axiomatrainee.model.user.User;
 import com.axioma.axiomatrainee.requestdto.SaveUserRequestDto;
 import com.axioma.axiomatrainee.requestdto.UpdateUserRatingRequestDto;
+import com.axioma.axiomatrainee.requestdto.UpdateUserRequestDto;
 import com.axioma.axiomatrainee.requestdto.UpdateUserRoleRequestDto;
 import com.axioma.axiomatrainee.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,11 +60,11 @@ public class UserController {
         userService.delete(id);
     }
 
-    @PatchMapping("/roles")
+    @PutMapping
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('admin')")
-    public User updateUserRoles(@RequestBody UpdateUserRoleRequestDto dto) {
-        return userService.updateUserRole(dto.getUserId(), dto.getRole());
+    public User updateUserRoles(@RequestBody UpdateUserRequestDto dto, @RequestParam Long userId) {
+        return userService.updateUser(userId, dto);
     }
 
     @PatchMapping("/rating")

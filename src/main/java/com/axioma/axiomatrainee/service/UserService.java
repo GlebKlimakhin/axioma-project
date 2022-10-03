@@ -5,6 +5,8 @@ import com.axioma.axiomatrainee.model.user.Status;
 import com.axioma.axiomatrainee.model.user.User;
 import com.axioma.axiomatrainee.repository.IUserRepository;
 import com.axioma.axiomatrainee.requestdto.SaveUserRequestDto;
+import com.axioma.axiomatrainee.requestdto.UpdateUserRequestDto;
+import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,9 @@ import java.util.Set;
 public class UserService {
 
     private IUserRepository userRepository;
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
 
     @Autowired
     public void setUserRepository(IUserRepository userRepository) {
@@ -39,7 +44,6 @@ public class UserService {
 
     public User save(SaveUserRequestDto request) {
         User user = new User();
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         user.setUsername(request.getUsername());
         user.setFirstname(request.getFirstname());
         user.setLastname(request.getLastname());
@@ -51,10 +55,15 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User updateUserRole(Long userId, Role role) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("No such user found"));
-        user.setRole(role);
+    public User updateUser(Long userId, UpdateUserRequestDto requestDto) {
+        User user = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
+        user.setUsername(requestDto.getUsername());
+        user.setRole(requestDto.getRole());
+        user.setFirstname(requestDto.getFirstname());
+        user.setLastname(requestDto.getLastname());
+        user.setStatus(requestDto.getStatus());
+        user.setEmail(requestDto.getEmail());
+        user.setPassword(bCryptPasswordEncoder.encode(requestDto.getPassword()));
         return userRepository.save(user);
     }
 

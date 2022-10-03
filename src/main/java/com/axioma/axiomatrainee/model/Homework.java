@@ -40,12 +40,9 @@ public class Homework {
             inverseJoinColumns = @JoinColumn(name = "exercise_id"))
     Set<Exercise> exercises;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinTable(name = "groups_homeworks",
-            joinColumns = @JoinColumn(name = "homework_id"),
-            inverseJoinColumns = @JoinColumn(name = "group_id"))
-    @JsonIgnore
-    Set<Group> groups;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name = "group_id", nullable = false)
+    Group group;
 
     @CreationTimestamp
     @Column(name = "creation_date")

@@ -29,6 +29,6 @@ public class CreateHomeworkRequestDto {
     long unixExpirationDate;
 
     @NotNull
-    Iterable<Long> groupIds;
+    Long groupId;
 
 }

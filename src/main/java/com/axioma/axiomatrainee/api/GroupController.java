@@ -68,7 +68,6 @@ public class GroupController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('teacher')")
     public void deleteUserFromGroup(@PathVariable Long groupId, @PathVariable Long userId) {
-        System.out.println("has entered controller method delete groups");
         groupService.deleteUserFromGroup(groupId, userId);
     }
 

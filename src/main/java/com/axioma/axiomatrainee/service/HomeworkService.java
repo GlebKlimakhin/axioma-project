@@ -1,5 +1,6 @@
 package com.axioma.axiomatrainee.service;
 
+import com.axioma.axiomatrainee.model.Group;
 import com.axioma.axiomatrainee.model.Homework;
 import com.axioma.axiomatrainee.model.dto.HomeworkDto;
 import com.axioma.axiomatrainee.model.exercises.DoneExercise;
@@ -26,10 +27,10 @@ import java.util.stream.Stream;
 @Service
 public class HomeworkService {
 
-    private IHomeworkRepository homeworkRepository;
-    private IExerciseRepository exerciseRepository;
-    private IGroupRepository groupRepository;
-    private IDoneExercisesRepository doneExercisesRepository;
+    private final IHomeworkRepository homeworkRepository;
+    private final IExerciseRepository exerciseRepository;
+    private final IGroupRepository groupRepository;
+    private final IDoneExercisesRepository doneExercisesRepository;
 
     public HomeworkService(IHomeworkRepository homeworkRepository, IExerciseRepository exerciseRepository, IGroupRepository groupRepository, IDoneExercisesRepository doneExercisesRepository) {
         this.homeworkRepository = homeworkRepository;
@@ -49,9 +50,11 @@ public class HomeworkService {
         homework.setDescription(request.getDescription());
         homework.setExpirationDate(
                 DateParser.parseFromUnix(request.getUnixExpirationDate()));
-        homework.setGroups(
-                Sets.newHashSet(groupRepository.findAllByGroupIds(request.getGroupIds())));
         homework.setTitle(request.getTitle());
+        Group group = groupRepository.findById(request.getGroupId())
+                .orElseThrow(() ->
+                        new EntityNotFoundException(String.format("Group with id %s not found", request.getGroupId())));
+        homework.setGroup(group);
         homeworkRepository.save(homework);
         return toDto(homework);
     }
@@ -118,7 +121,7 @@ public class HomeworkService {
                 .title(homework.getTitle())
                 .description(homework.getDescription())
                 .exercises(homework.getExercises())
-                .groups(homework.getGroups())
+                .group(homework.getGroup())
                 .creationDate(DateParser.parseFromDate(homework.getCreationDate()))
                 .expirationDate(DateParser.parseFromDate(homework.getExpirationDate()))
                 .build();

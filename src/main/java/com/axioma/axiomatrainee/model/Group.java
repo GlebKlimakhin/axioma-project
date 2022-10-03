@@ -29,10 +29,7 @@ public class Group {
     @NotBlank
     String name;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinTable(name = "groups_homeworks",
-    joinColumns = @JoinColumn(name = "group_id"),
-    inverseJoinColumns = @JoinColumn(name = "homework_id"))
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, orphanRemoval = true)
     Set<Homework> homeworks;
 
     @ManyToMany(fetch = FetchType.EAGER)
