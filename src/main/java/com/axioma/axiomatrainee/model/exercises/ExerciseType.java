@@ -1,9 +1,8 @@
 package com.axioma.axiomatrainee.model.exercises;
 
-import lombok.Getter;
 
 public enum ExerciseType {
-    READING_SPEED, ARITHMETICS;
+    READING_SPEED, COLUMNS, AFTERBURNER, TEXTS_WITH_QUESTIONS, SPROUTS;
 
     @Override
     public String toString() {

@@ -2,27 +2,26 @@ package com.axioma.axiomatrainee.service.exercises;
 
 import com.axioma.axiomatrainee.model.exercises.Exercise;
 import com.axioma.axiomatrainee.model.exercises.ExerciseType;
+import com.axioma.axiomatrainee.model.exercises.Question;
+import com.axioma.axiomatrainee.model.exercises.QuestionDto;
 import com.axioma.axiomatrainee.repository.IExerciseRepository;
+import com.axioma.axiomatrainee.repository.QuestionsRepository;
 import com.axioma.axiomatrainee.requestdto.SaveExerciseRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.time.Instant;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ExerciseService {
 
-    private IExerciseRepository exerciseRepository;
-
-    @Autowired
-    public void setExerciseRepository(IExerciseRepository exerciseRepository) {
-        this.exerciseRepository = exerciseRepository;
-    }
+    private final IExerciseRepository exerciseRepository;
+    private final QuestionsRepository questionsRepository;
 
     public Optional<Exercise> findById(Long id, ExerciseType type) {
         return exerciseRepository.findByIdAndExerciseTypeEquals(id, type);
@@ -32,17 +31,36 @@ public class ExerciseService {
         exerciseRepository.deleteById(id);
     }
 
+    @Transactional
     public Exercise save(SaveExerciseRequest request) {
+        Set<Question> questions = new HashSet<>();
+        if(request.getQuestions() != null) {
+            questions = request.getQuestions().stream()
+                    .map(this::fromDto)
+                    .collect(Collectors.toSet());
+            questionsRepository.saveAll(questions);
+        }
         Exercise exercise = Exercise.builder()
                         .exerciseType(request.getType())
                         .name(request.getName())
                         .difficulty(request.getDifficulty())
                         .data(request.getData())
+                        .questions(questions)
+                        .createdAt(Date.from(Instant.now()))
                         .build();
+        questions.forEach(q -> q.setExercise(exercise));
         return exerciseRepository.save(exercise);
     }
 
     public Set<Exercise> findAllByType(ExerciseType exerciseType) {
         return exerciseRepository.findAllByExerciseTypeEquals(exerciseType);
     }
-}
+
+    private Question fromDto(QuestionDto dto) {
+        Question question = new Question();
+        question.setQuestion(dto.getQuestion());
+        question.setAnswers(dto.getAnswers());
+        question.setRightAnswer(dto.getRightAnswer());
+        return question;
+    }
+ }

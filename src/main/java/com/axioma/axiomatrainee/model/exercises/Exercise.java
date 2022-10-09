@@ -3,10 +3,11 @@ package com.axioma.axiomatrainee.model.exercises;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Table(name = "exercises")
@@ -44,6 +45,9 @@ public class Exercise {
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     Date createdAt;
+
+    @OneToMany(mappedBy = "exercise", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    Set<Question> questions;
 
     //todo scopes
     //todo interval for 5, 4, 3, not_done

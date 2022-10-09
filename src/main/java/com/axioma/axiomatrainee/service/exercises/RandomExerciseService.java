@@ -1,7 +1,6 @@
 package com.axioma.axiomatrainee.service.exercises;
 
 import com.axioma.axiomatrainee.model.dto.DoneExerciseDto;
-import com.axioma.axiomatrainee.model.exercises.DoneExercise;
 import com.axioma.axiomatrainee.model.exercises.Exercise;
 import com.axioma.axiomatrainee.model.exercises.ExerciseType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,8 @@ import java.util.Set;
 @Service
 public class RandomExerciseService {
 
-    private ExerciseService exerciseService;
-    private DoneExerciseService doneExerciseService;
+    private final ExerciseService exerciseService;
+    private final DoneExerciseService doneExerciseService;
 
     @Autowired
     public RandomExerciseService(ExerciseService exerciseService, DoneExerciseService doneExerciseService) {

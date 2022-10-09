@@ -40,7 +40,7 @@ public class Homework {
             inverseJoinColumns = @JoinColumn(name = "exercise_id"))
     Set<Exercise> exercises;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "group_id", nullable = false)
     Group group;
 

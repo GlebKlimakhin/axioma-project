@@ -1,4 +1,7 @@
 drop table if exists groups_homeworks;
+delete from homeworks;
+delete from users_groups;
+delete from groups;
 alter table homeworks
 add column group_id bigint;
 alter table homeworks
