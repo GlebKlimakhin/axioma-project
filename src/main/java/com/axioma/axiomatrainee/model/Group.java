@@ -29,7 +29,7 @@ public class Group {
     @NotBlank
     String name;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, orphanRemoval = true, mappedBy = "group")
     Set<Homework> homeworks;
 
     @ManyToMany(fetch = FetchType.EAGER)
