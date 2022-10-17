@@ -1,5 +1,6 @@
 package com.axioma.axiomatrainee.service;
 
+import com.axioma.axiomatrainee.model.projections.UserView;
 import com.axioma.axiomatrainee.model.user.Role;
 import com.axioma.axiomatrainee.model.user.Status;
 import com.axioma.axiomatrainee.model.user.User;
@@ -38,8 +39,8 @@ public class UserService {
                 .orElseThrow(EntityNotFoundException::new);
     }
 
-    public Set<User> findAllByIds(Iterable<Long> ids) {
-        return userRepository.findAllByIds(ids);
+    public List<UserView> findAllByIds(Iterable<Long> ids) {
+        return userRepository.findAllByIdIn(ids, UserView.class);
     }
 
     public User save(SaveUserRequestDto request) {

@@ -1,5 +1,6 @@
 package com.axioma.axiomatrainee.api;
 
+import com.axioma.axiomatrainee.model.projections.UserView;
 import com.axioma.axiomatrainee.model.user.User;
 import com.axioma.axiomatrainee.requestdto.SaveUserRequestDto;
 import com.axioma.axiomatrainee.requestdto.UpdateUserRatingRequestDto;
@@ -43,7 +44,7 @@ public class UserController {
     @GetMapping("/ids")
     @PreAuthorize("hasAuthority('user')")
     @ResponseStatus(HttpStatus.OK)
-    public Set<User> findUsersByIds(@RequestBody Iterable<Long> ids) {
+    public List<UserView> findUsersByIds(@RequestBody Iterable<Long> ids) {
         return userService.findAllByIds(ids);
     }
 

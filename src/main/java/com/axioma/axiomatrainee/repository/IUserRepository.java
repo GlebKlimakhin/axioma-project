@@ -13,6 +13,10 @@ import java.util.Set;
 
 public interface IUserRepository extends JpaRepository<User, Long> {
 
+    <T> T findById(Long id, Class<T> clazz);
+
+    <T> List<T> findAllByIdIn(Iterable<Long> ids, Class<T> clazz);
+
     Optional<User> findByFirstnameAndLastname(String firstname, String lastname);
 
     Optional<User> findByUsername(String username);

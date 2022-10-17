@@ -1,5 +1,6 @@
 package com.axioma.axiomatrainee.requestdto;
 
+import com.axioma.axiomatrainee.model.exercises.ExerciseSettings;
 import com.axioma.axiomatrainee.model.exercises.ExerciseType;
 import com.axioma.axiomatrainee.model.exercises.Question;
 import com.axioma.axiomatrainee.model.exercises.QuestionDto;
@@ -28,4 +29,5 @@ public class SaveExerciseRequest {
     @NotNull
     Integer difficulty;
     Set<QuestionDto> questions;
+    ExerciseSettings settings;
 }

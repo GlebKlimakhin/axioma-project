@@ -24,7 +24,9 @@ public class TextWithQuestionsExerciseController {
     }
 
     @GetMapping
-    public Set<Exercise> findAllByType() {
+    public Set<Exercise> findAll() {
         return exerciseService.findAllByType(TYPE);
     }
+
+
 }

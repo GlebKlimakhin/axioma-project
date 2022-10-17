@@ -49,6 +49,10 @@ public class Exercise {
     @OneToMany(mappedBy = "exercise", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     Set<Question> questions;
 
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "settings_id", referencedColumnName = "id")
+    ExerciseSettings settings;
+
     //todo scopes
     //todo interval for 5, 4, 3, not_done
 }

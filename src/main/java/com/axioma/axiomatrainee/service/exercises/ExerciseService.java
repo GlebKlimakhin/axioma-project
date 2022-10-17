@@ -1,11 +1,9 @@
 package com.axioma.axiomatrainee.service.exercises;
 
-import com.axioma.axiomatrainee.model.exercises.Exercise;
-import com.axioma.axiomatrainee.model.exercises.ExerciseType;
-import com.axioma.axiomatrainee.model.exercises.Question;
-import com.axioma.axiomatrainee.model.exercises.QuestionDto;
+import com.axioma.axiomatrainee.model.exercises.*;
 import com.axioma.axiomatrainee.repository.IExerciseRepository;
 import com.axioma.axiomatrainee.repository.QuestionsRepository;
+import com.axioma.axiomatrainee.repository.SettingsRepository;
 import com.axioma.axiomatrainee.requestdto.SaveExerciseRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +20,7 @@ public class ExerciseService {
 
     private final IExerciseRepository exerciseRepository;
     private final QuestionsRepository questionsRepository;
+    private final SettingsRepository settingsRepository;
 
     public Optional<Exercise> findById(Long id, ExerciseType type) {
         return exerciseRepository.findByIdAndExerciseTypeEquals(id, type);
@@ -40,12 +39,17 @@ public class ExerciseService {
                     .collect(Collectors.toSet());
             questionsRepository.saveAll(questions);
         }
+        ExerciseSettings settings = new ExerciseSettings();
+        if(request.getSettings() != null) {
+            settings = settingsRepository.save(request.getSettings());
+        }
         Exercise exercise = Exercise.builder()
                         .exerciseType(request.getType())
                         .name(request.getName())
                         .difficulty(request.getDifficulty())
                         .data(request.getData())
                         .questions(questions)
+                        .settings(settings)
                         .createdAt(Date.from(Instant.now()))
                         .build();
         questions.forEach(q -> q.setExercise(exercise));
