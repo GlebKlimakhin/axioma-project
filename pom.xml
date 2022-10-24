@@ -15,7 +15,7 @@
     <description>axioma-trainee</description>
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>
-        <java.version>17</java.version>
+        <java.version>11</java.version>
     </properties>
     <dependencies>
         <dependency>
