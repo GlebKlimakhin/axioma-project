@@ -13,7 +13,6 @@ import java.util.Set;
 @RequestMapping("/afterburner")
 @RequiredArgsConstructor
 public class AfterBurnerExerciseController {
-
     private final ExerciseService exerciseService;
     private final ExerciseType TYPE = ExerciseType.AFTERBURNER;
 

@@ -77,6 +77,7 @@ public class SpringDocConfig {
                 .build();
     }
 
+    @Bean
     public GroupedOpenApi afterburnerOpenApi() {
         String[] paths = {"/afterburner/**"};
 
