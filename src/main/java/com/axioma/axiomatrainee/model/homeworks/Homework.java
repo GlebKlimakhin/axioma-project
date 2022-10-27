@@ -1,5 +1,6 @@
-package com.axioma.axiomatrainee.model;
+package com.axioma.axiomatrainee.model.homeworks;
 
+import com.axioma.axiomatrainee.model.Group;
 import com.axioma.axiomatrainee.model.exercises.Exercise;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -21,6 +22,7 @@ import java.util.Set;
 @NamedEntityGraph(name = "Homeworks.exercises",
         attributeNodes = @NamedAttributeNode("exercises")
 )
+@Builder
 public class Homework {
 
     @Id
@@ -50,4 +52,11 @@ public class Homework {
 
     @Column(name = "expiration_date")
     Date expirationDate;
+
+    @Column(name = "repeat_rate")
+    @Enumerated(EnumType.STRING)
+    RepeatRate repeatRate;
+
+    @Column(name = "days_to_repeat")
+    int daysToRepeat;
 }

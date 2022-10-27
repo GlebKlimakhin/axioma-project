@@ -1,5 +1,6 @@
 package com.axioma.axiomatrainee.requestdto;
 
+import com.axioma.axiomatrainee.model.homeworks.RepeatRate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,10 +26,15 @@ public class CreateHomeworkRequestDto {
     @NotBlank
     String description;
 
-    @NotNull
     long unixExpirationDate;
 
     @NotNull
     Long groupId;
+
+    boolean isRepeatable;
+
+    RepeatRate repeatRate;
+
+    int daysToRepeat;
 
 }

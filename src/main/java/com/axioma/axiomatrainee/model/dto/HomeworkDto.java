@@ -2,6 +2,7 @@ package com.axioma.axiomatrainee.model.dto;
 
 import com.axioma.axiomatrainee.model.Group;
 import com.axioma.axiomatrainee.model.exercises.Exercise;
+import com.axioma.axiomatrainee.model.homeworks.RepeatRate;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -23,4 +24,6 @@ public class HomeworkDto {
     Group group;
     Long creationDate;
     Long expirationDate;
+    RepeatRate repeatRate;
+    int daysToRepeat;
 }

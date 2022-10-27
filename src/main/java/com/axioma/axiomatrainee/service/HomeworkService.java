@@ -1,68 +1,76 @@
 package com.axioma.axiomatrainee.service;
 
 import com.axioma.axiomatrainee.model.Group;
-import com.axioma.axiomatrainee.model.Homework;
+import com.axioma.axiomatrainee.model.homeworks.Homework;
 import com.axioma.axiomatrainee.model.dto.HomeworkDto;
 import com.axioma.axiomatrainee.model.exercises.DoneExercise;
 import com.axioma.axiomatrainee.model.exercises.DoneExerciseId;
 import com.axioma.axiomatrainee.model.exercises.Exercise;
+import com.axioma.axiomatrainee.model.homeworks.RepeatRate;
 import com.axioma.axiomatrainee.model.user.User;
 import com.axioma.axiomatrainee.repository.IDoneExercisesRepository;
 import com.axioma.axiomatrainee.repository.IExerciseRepository;
 import com.axioma.axiomatrainee.repository.IGroupRepository;
 import com.axioma.axiomatrainee.repository.IHomeworkRepository;
 import com.axioma.axiomatrainee.requestdto.CreateHomeworkRequestDto;
+import com.axioma.axiomatrainee.service.mapper.HomeworkMapper;
 import com.axioma.axiomatrainee.utill.DateParser;
 import com.google.common.collect.Sets;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 
 @Service
 public class HomeworkService {
 
     private final IHomeworkRepository homeworkRepository;
-    private final IExerciseRepository exerciseRepository;
     private final IGroupRepository groupRepository;
     private final IDoneExercisesRepository doneExercisesRepository;
+    private final HomeworkMapper homeworkMapper;
 
-    public HomeworkService(IHomeworkRepository homeworkRepository, IExerciseRepository exerciseRepository, IGroupRepository groupRepository, IDoneExercisesRepository doneExercisesRepository) {
+    public HomeworkService(IHomeworkRepository homeworkRepository, IGroupRepository groupRepository, IDoneExercisesRepository doneExercisesRepository, HomeworkMapper homeworkMapper) {
         this.homeworkRepository = homeworkRepository;
-        this.exerciseRepository = exerciseRepository;
         this.groupRepository = groupRepository;
         this.doneExercisesRepository = doneExercisesRepository;
+        this.homeworkMapper = homeworkMapper;
     }
 
     public List<HomeworkDto> findAll() {
-        return homeworkRepository.findAll().stream().map(this::toDto).collect(Collectors.toList());
+        return homeworkRepository.findAll().stream().map(homeworkMapper::toDto).collect(Collectors.toList());
     }
 
-    public HomeworkDto createHomework(CreateHomeworkRequestDto request) {
-        Homework homework = new Homework();
-        homework.setExercises(Sets.newHashSet(
-                exerciseRepository.findAllByExerciseIds(request.getExercisesIds())));
-        homework.setDescription(request.getDescription());
-        homework.setExpirationDate(
-                DateParser.parseFromUnix(request.getUnixExpirationDate()));
-        homework.setTitle(request.getTitle());
-        Group group = groupRepository.findById(request.getGroupId())
-                .orElseThrow(() ->
-                        new EntityNotFoundException(String.format("Group with id %s not found", request.getGroupId())));
-        homework.setGroup(group);
-        homeworkRepository.save(homework);
-        return toDto(homework);
+    public List<HomeworkDto> createHomework(CreateHomeworkRequestDto request) {
+        Homework homework = homeworkMapper.fromRequestDto(request);
+        if(homework.getRepeatRate().equals(RepeatRate.NEVER)) {
+            HomeworkDto saved = homeworkMapper.toDto(homeworkRepository.save(homework));
+            return Collections.singletonList(saved);
+        }
+        else {
+            List<Homework> partedByDays = setExpirationDates(homework);
+            List<Homework> saved = homeworkRepository.saveAll(partedByDays);
+            return saved.stream()
+                    .map(homeworkMapper::toDto)
+                    .toList();
+        }
+    }
+
+    private List<Homework> setExpirationDates(Homework homework) {
+        List<Homework> homeworks = Collections.nCopies(homework.getDaysToRepeat(), homework);
+        int currentDay = 0;
+        long currentTimeUnix = System.currentTimeMillis();
+        for (Homework h : homeworks) {
+            currentDay++;
+            homework.setExpirationDate(DateParser.parseFromUnix(currentTimeUnix + 86400L * currentDay));
+        }
+        return homeworks;
     }
 
     public HomeworkDto findById(Long id) {
         return homeworkRepository.findById(id)
                 .stream()
-                .map(this::toDto)
+                .map(homeworkMapper::toDto)
                 .findFirst()
                 .orElseThrow(EntityNotFoundException::new);
     }
@@ -70,7 +78,7 @@ public class HomeworkService {
     public List<HomeworkDto> findByDescriptionContaining(String description) {
         return homeworkRepository.findAllByDescriptionContainingIgnoreCase(description)
                 .stream()
-                .map(this::toDto)
+                .map(homeworkMapper::toDto)
                 .toList();
     }
 
@@ -79,7 +87,7 @@ public class HomeworkService {
                 .orElseThrow(() -> new EntityNotFoundException("No such group found"))
                 .getHomeworks()).orElseThrow(() -> new EntityNotFoundException("No homeworks for this group yet"))
                 .stream()
-                .map(this::toDto)
+                .map(homeworkMapper::toDto)
                 .collect(Collectors.toSet());
     }
 
@@ -89,14 +97,14 @@ public class HomeworkService {
                 .filter(g -> g.getUsers()
                         .stream()
                         .anyMatch(u -> u.getId().equals(userId)))
-                .flatMap(g -> g.getHomeworks().stream().distinct().map(this::toDto))
+                .flatMap(g -> g.getHomeworks().stream().distinct().map(homeworkMapper::toDto))
                 .collect(Collectors.toSet());
     }
 
     public List<HomeworkDto> findByTitle(String title) {
         return homeworkRepository.findAllByTitleContaining(title)
                 .stream()
-                .map(this::toDto)
+                .map(homeworkMapper::toDto)
                 .toList();
     }
 
@@ -115,16 +123,5 @@ public class HomeworkService {
         return doneExercises.stream().map(DoneExercise::getDoneExerciseId).toList();
     }
 
-    public HomeworkDto toDto(Homework homework) {
-        return HomeworkDto.builder()
-                .id(homework.getId())
-                .title(homework.getTitle())
-                .description(homework.getDescription())
-                .exercises(homework.getExercises())
-                .group(homework.getGroup())
-                .creationDate(DateParser.parseFromDate(homework.getCreationDate()))
-                .expirationDate(DateParser.parseFromDate(homework.getExpirationDate()))
-                .build();
-    }
 
 }

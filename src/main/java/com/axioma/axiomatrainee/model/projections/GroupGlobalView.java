@@ -1,6 +1,6 @@
 package com.axioma.axiomatrainee.model.projections;
 
-import com.axioma.axiomatrainee.model.Homework;
+import com.axioma.axiomatrainee.model.homeworks.Homework;
 
 import java.util.Set;
 

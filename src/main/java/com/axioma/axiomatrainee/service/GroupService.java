@@ -1,7 +1,7 @@
 package com.axioma.axiomatrainee.service;
 
 import com.axioma.axiomatrainee.model.Group;
-import com.axioma.axiomatrainee.model.Homework;
+import com.axioma.axiomatrainee.model.homeworks.Homework;
 import com.axioma.axiomatrainee.model.user.User;
 import com.axioma.axiomatrainee.repository.IGroupRepository;
 import com.axioma.axiomatrainee.repository.IHomeworkRepository;

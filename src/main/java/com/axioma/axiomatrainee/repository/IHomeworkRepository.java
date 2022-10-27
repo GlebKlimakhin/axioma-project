@@ -1,6 +1,6 @@
 package com.axioma.axiomatrainee.repository;
 
-import com.axioma.axiomatrainee.model.Homework;
+import com.axioma.axiomatrainee.model.homeworks.Homework;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 

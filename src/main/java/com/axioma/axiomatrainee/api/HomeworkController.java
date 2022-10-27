@@ -1,7 +1,6 @@
 package com.axioma.axiomatrainee.api;
 
 
-import com.axioma.axiomatrainee.model.Homework;
 import com.axioma.axiomatrainee.model.dto.HomeworkDto;
 import com.axioma.axiomatrainee.model.exercises.DoneExerciseId;
 import com.axioma.axiomatrainee.requestdto.CreateHomeworkRequestDto;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
@@ -30,7 +28,7 @@ public class HomeworkController {
     @PostMapping
     @PreAuthorize("hasAuthority('teacher')")
     @ResponseStatus(HttpStatus.CREATED)
-    public HomeworkDto create(@RequestBody @Valid CreateHomeworkRequestDto request) {
+    public List<HomeworkDto> create(@RequestBody @Valid CreateHomeworkRequestDto request) {
         return homeworkService.createHomework(request);
     }
 
