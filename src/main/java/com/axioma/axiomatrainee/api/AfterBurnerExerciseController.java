@@ -6,11 +6,13 @@ import com.axioma.axiomatrainee.requestdto.SaveExerciseRequest;
 import com.axioma.axiomatrainee.service.exercises.ExerciseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Set;
 
 @RestController
+@RequestMapping("/afterburner")
 @RequiredArgsConstructor
 public class AfterBurnerExerciseController {
 
