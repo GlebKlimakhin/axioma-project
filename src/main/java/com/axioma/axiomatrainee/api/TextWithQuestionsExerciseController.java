@@ -13,9 +13,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/texts")
 public class TextWithQuestionsExerciseController {
-
     public static final ExerciseType TYPE = ExerciseType.TEXTS_WITH_QUESTIONS;
-
     private final ExerciseService exerciseService;
 
     @PostMapping

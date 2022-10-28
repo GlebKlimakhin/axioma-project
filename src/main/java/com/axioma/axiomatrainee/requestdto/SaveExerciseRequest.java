@@ -20,7 +20,6 @@ import java.util.Set;
 @Setter
 public class SaveExerciseRequest {
 
-    @NotBlank
     String data;
     @NotNull
     ExerciseType type;

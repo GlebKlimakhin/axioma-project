@@ -36,7 +36,7 @@ public class Homework {
     @Column(name = "description")
     String description;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(name ="homeworks_exercises",
             joinColumns = @JoinColumn(name = "homework_id"),
             inverseJoinColumns = @JoinColumn(name = "exercise_id"))

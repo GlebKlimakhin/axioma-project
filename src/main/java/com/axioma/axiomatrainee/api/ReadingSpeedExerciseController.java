@@ -5,6 +5,7 @@ import com.axioma.axiomatrainee.model.exercises.ExerciseType;
 import com.axioma.axiomatrainee.requestdto.SaveExerciseRequest;
 import com.axioma.axiomatrainee.service.exercises.ExerciseService;
 import com.axioma.axiomatrainee.service.exercises.RandomExerciseService;
+import org.hibernate.annotations.Fetch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,9 +18,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/reading")
 public class ReadingSpeedExerciseController {
-
     public static final ExerciseType TYPE = ExerciseType.READING_SPEED;
-
     private final ExerciseService exerciseService;
     private final RandomExerciseService randomExerciseService;
 
