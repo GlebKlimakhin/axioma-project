@@ -44,6 +44,7 @@ public class Homework {
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "group_id", nullable = false)
+    @JsonIgnore
     Group group;
 
     @CreationTimestamp
