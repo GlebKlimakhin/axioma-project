@@ -11,6 +11,9 @@ public class DateParser {
     }
 
     public static Long parseFromDate(Date date) {
+        if(date == null) {
+            return 0L;
+        }
         return date.getTime()/1000;
     }
 }
