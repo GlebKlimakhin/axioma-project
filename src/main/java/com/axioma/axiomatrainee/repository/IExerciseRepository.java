@@ -18,4 +18,7 @@ public interface IExerciseRepository extends JpaRepository<Exercise, Long> {
 
     @Query("select ex from Exercise ex where ex.id in :ids")
     Iterable<Exercise> findAllByExerciseIds(@Param("ids") Iterable<Long> ids);
+
+    <T> T findById(Long id, Class<T> clazz);
+
 }
