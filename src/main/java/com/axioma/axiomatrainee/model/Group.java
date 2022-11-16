@@ -2,7 +2,6 @@ package com.axioma.axiomatrainee.model;
 
 import com.axioma.axiomatrainee.model.homeworks.Homework;
 import com.axioma.axiomatrainee.model.user.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.Hibernate;

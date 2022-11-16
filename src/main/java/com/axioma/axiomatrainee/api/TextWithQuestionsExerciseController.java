@@ -26,5 +26,10 @@ public class TextWithQuestionsExerciseController {
         return exerciseService.findAllByType(TYPE);
     }
 
+    @GetMapping("/{id}")
+    public Exercise findById(@PathVariable Long id) {
+        return exerciseService.findById(id, TYPE)
+                .orElseThrow(RuntimeException::new);
+    }
 
 }

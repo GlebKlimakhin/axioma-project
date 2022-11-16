@@ -25,4 +25,19 @@ public class AfterBurnerExerciseController {
     public Set<Exercise> findAll() {
         return exerciseService.findAllByType(TYPE);
     }
+
+    @GetMapping("/{id}")
+    public Exercise findById(@PathVariable Long id) {
+        return exerciseService.findById(id, TYPE)
+                .orElseThrow(ExerciseNotFoundException::new);
+    }
+
+    private static class ExerciseNotFoundException extends RuntimeException {
+        public ExerciseNotFoundException() {
+        }
+
+        public ExerciseNotFoundException(String message) {
+            super(message);
+        }
+    }
 }
